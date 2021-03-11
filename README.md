@@ -1,6 +1,6 @@
 ![image](images/microchip.jpg) 
 
-## %repoDescritpion%
+## PIC24 DSPIC CAN CANFD BOOTLOADER
 
 Board Image if any.
 
