@@ -36,17 +36,12 @@
       },
       "peripherals":[
          "CAN",
-		 "CAN-FD",
-		 "CANFD"
+		 "CAN FD"
       ],
       "keywords":[
          "CAN",
          "Bootloader",
-		 "CAN-FD",
-		 "CANFD",
-		 "ISO-15765",
-		 "ISO-TP",
-		 "CAN-TP"
+		 "CAN-FD"
       ]
    }
 }
