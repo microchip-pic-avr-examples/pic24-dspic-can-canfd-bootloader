@@ -48,7 +48,7 @@ pipeline {
         /*
             Project Build Stage Information
         */
-        MPLABX_PROJECT_SOURCE = "../can"
+        MPLABX_PROJECT_SOURCE = "../"
     }
 
     options {
