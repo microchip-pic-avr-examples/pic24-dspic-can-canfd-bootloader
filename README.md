@@ -19,4 +19,8 @@ There are 3 configurations provided in this demo:
 
 The hardware and software setup is different for each of these use cases.  There are readme*.html files associated with each folder that describe the required hardware and software as well as how to setup and run each of the corresponding demos.
 
+https://microchip-pic-avr-examples.github.io/pic24-dspic-can-canfd-bootloader/dspic33ck-can
+https://microchip-pic-avr-examples.github.io/pic24-dspic-can-canfd-bootloader/dspic33ck-canfd
+https://microchip-pic-avr-examples.github.io/pic24-dspic-can-canfd-bootloader/dspic33ep-can2.0b
+
 

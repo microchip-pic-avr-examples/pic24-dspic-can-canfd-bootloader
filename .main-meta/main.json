@@ -5,9 +5,9 @@
       "metaDataVersion":"1.0.0",
       "name":"com.microchip.mplabx.project.pic24-dspic-can-canfd-bootloader",
       "version":"x.x.x",
-      "displayName":"CAN/CAN-FD Bootloader for PIC24/dsPIC products",
+      "displayName":"PIC24/dsPIC CAN/CAN-FD Bootloader",
       "projectName":"pic24-dspic-can-canfd-bootloader",
-      "shortDescription":"CAN and CAN-FD bootloader example using the ISO-15765 CAN transport layer for the PIC24 and dsPIC product lines.",
+      "shortDescription":"CAN and CAN-FD bootloader example using the ISO-15765-2 CAN transport layer for the PIC24 and dsPIC product lines.",
       "ide":{
          "name":"MPLABX",
          "semverRange":">=5.40.0"
