@@ -5,20 +5,20 @@
       "metaDataVersion":"1.0.0",
       "name":"com.microchip.mplabx.project.pic24-dspic-can-canfd-bootloader",
       "version":"x.x.x",
-      "displayName":"xxxxxxxxxxxxxxx",
+      "displayName":"PIC24/dsPIC CAN/CAN-FD Bootloader",
       "projectName":"pic24-dspic-can-canfd-bootloader",
-      "shortDescription":"xxxxxxxxxxxxxxx",
+      "shortDescription":"CAN and CAN-FD bootloader example using the ISO-15765-2 CAN transport layer for the PIC24 and dsPIC product lines.",
       "ide":{
          "name":"MPLABX",
          "semverRange":">=5.40.0"
       },
       "compiler":{
          "name":"XC16",
-         "semverRange":"^1.50.0"
+         "semverRange":"^1.61.0"
       },
       "dfp":{
-         "name":"xxxxxxxxxxxxxxx",
-         "semverRange":">=x.x.x"
+         "name":"dsPIC33CK-MP_DFP",
+         "semverRange":">=1.5.135"
       },
 	  "configurator": {
          "name": "MCC",
@@ -30,17 +30,18 @@
          "content":{
             "metaDataVersion":"1.0.0",
             "category":"com.microchip.device",
-            "name":"xxxxxxxxxxxxxxx",
+            "name":"dsPIC33CK256MP508",
             "versionRange":"*"
          }
       },
       "peripherals":[
-         "DMA",
-         "CAN"
+         "CAN",
+		 "CAN FD"
       ],
       "keywords":[
-         "DMA",
-         "Sensor"
+         "CAN",
+         "Bootloader",
+		 "CAN-FD"
       ]
    }
 }
