@@ -1,0 +1,1 @@
+hexmate r0-5FFF,..\..\..\..\boot\dist\default\production\boot.production.hex r6000-56FFF,..\..\dist\default\production\app.X.production.hex r57000-FFFFFFFF,..\..\..\..\boot\dist\default\production\boot.production.hex -O..\..\dist\default\production\combined.production.hex

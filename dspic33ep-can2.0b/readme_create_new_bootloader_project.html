@@ -1,0 +1,394 @@
+<html>
+
+<head>
+  <style>
+    h2 {
+      text-decoration: bold;
+    }
+
+    h3 {
+      text-decoration: underline;
+    }
+
+    ol,ul {
+      line-height: 200%;
+    }
+    code { 
+      font-family: monospace;
+    }
+  </style>
+</head>
+
+<body lang=EN-US link=blue vlink=purple>
+  <h1>Creating the Bootloader Example Using the CAN Physical Layer with the ECAN Controller</h1>
+
+  <h2>Introduction</h2>
+  This example will show how to create a CAN Bootloader DEMO from scratch using the dsPIC33EP512MU810 processor module for the Explorer 16/32 board.
+  This demo uses the ISO 15765-2 CAN Transport Protocol layer to transport custom bootloader commands over the CAN bus
+  as seen in the diagram below:<br>
+  <img src="readme_files/stack.png"><br>
+  <h2>Tools</h2>
+
+  <h3>Software</h3>
+  <ol>
+    <li>The unzipped example project files, boot.X and app.X</li>
+    <li><a href="https://www.microchip.com/mplabx">Microchip MPLAB® X version 5.40 or later</a></li>
+    <li><a href="https://www.microchip.com/en-us/development-tools-tools-and-software/mplab-xc-compilers">Microchip MPLAB® XC16 C compiler version 1.60 or later</a></li>
+    <li><a href="https://www.microchip.com/16-bit-Bootloader">Unified Bootloader Host Application v1.17.0 or later</a></li>
+    <li>Microchip MPLAB® Code Configurator version v4.0.1 or later (optional – for code configuration)</li>
+    <li>16-bit Bootloader MCC module version 1.18.3 or later (optional – for code configuration)</li>
+    <li>The drivers for the selected Peak CAN-FD protocol analyzer/protocol generator (available at <a href="https://www.peak-system.com/Home.59.0.html?&L=1">https://www.peak-system.com/Home.59.0.html?&L=1</a>)</li>
+  </ol>
+
+  <h3>Hardware</h3>
+  <ol>
+    <li><a href="https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM240001-2">Explorer 16/32 Demo board</a> </li>
+    <li><a href="https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA330025-1">dsPIC33EP512MU810 Processor module</a> or other Processors with the Microchip ECAN module</li>
+    <li>A programmer/debugger of choice</li>
+    <li>A Peak CAN protocol analyzer/protocol generator. A PCAN-USB FD was used for development of this demo
+      (<a href="https://www.peak-system.com/PCAN-USB-FD.365.0.html?&L=1">https://www.peak-system.com/PCAN-USB-FD.365.0.html?&L=1</a>).</li>
+    <li>A CAN cable</li>
+    <li>An MCP2542 click board (<a href="https://www.mikroe.com/mcp2542-click">https://www.mikroe.com/mcp2542-click</a>) or another appropriate CAN transceiver click
+   board.
+      It is important that this is just a transceiver and not a CAN-to-SPI/UART converter chip.</li>
+    <li>A micro USB cable, a USB-Type C cable, or a 9v power adapter for the Explorer 16/32 (for powering the board).
+    </li>
+  </ol>
+
+  <h2>Creating the Demo</h2>
+
+  <h3>Hardware Configuration</h3>
+  <ol>
+    <li>With the Explorer 16/32 Board detached from any power source, programmer, or USB connection:</li>
+    <ol type="a">
+      <li>Connect the dsPIC33EP512MU810 processor module into the socket on the Explorer 16/32 Board such that the notched
+        edge is
+        in the top left corner matching the silk screen on the Explorer 16/32</li>
+      <li>Connect the MCP2542 daughter board into the mikroBUS™ A slot.</li>
+    </ol>
+    <li>Connect the programmer to the Explorer 16/32</li>
+    <li>Connect the Peak analyzer/generator to your computer.</li>
+    <li>Connect the Peak analyzer/generator to the MCP2543 daughter board with the CAN cable.</li>
+    <li>Power the board using either USB cable or the 9 volt adapter plug.</li>
+  </ol>
+  <img src="readme_files/hardware.jpg"><br><br>
+
+  <h3>Creating the Bootloader</h3>
+  <ol>
+      <li>Create a new project called boot for your part.  I will use the part <b>dsPIC33EP512MU810</b> and the compiler 1.61.  A compiler version 1.60 or later is mandatory.</li>
+      <img src="readme_new_bootloader_files/new_project.png"><br><br>
+      Open MCC 
+      <li>Go to Project Resources, System Module </li>
+      <ol>
+        <li>Configure Clock to be 8000000 and Primary Oscillator</li>
+        <li>Enable the PLL and configure the PLL to generate a 40Mhz Fosc as shown below.</li>
+        <li>Disable the Auxiliary Clock if its not needed</li>
+        <img src="readme_new_bootloader_files/configure_clocks.png"><br><br>
+        <li>If you're using the debugger, configure the ICD for your setting.  For this board and PIM use PGEC1 and PCED1 </li>
+        <li>Finally, depending on your part you may want to allow multiple reconfigurations of the GPIO by switching to the register view and changing the IOL1WAY bit to "Allow Multiple reconfigurations"</li>
+        <img src="readme_new_bootloader_files/allow_reconfig.png"><br><br>
+      </ol>
+
+    
+      <li>Adding Bootloader to the project. </Li>
+        <ol>
+        <li>In MCC, go to Device Resources, Libraries, 16-Bit Bootloader and add the 16-Bit Bootloader:Bootloader to the project.</li>
+        <img src="readme_new_bootloader_files/bootloader_add.png"><br><br>
+
+        <li>Go to the 16-Bit Bootloader Configuration screen shown below</li>
+      
+        <li>Select UART1 Foundation Services as the Protocol for communication device (we will not use this but selecting here will help generate the needed code.)</li>
+        <li>Change the Bootloader End Address to 0x3000</li>
+        <li>For this example I will default to the simplest verification method of "Not Blank"</li>
+        <img src="readme_new_bootloader_files/configure_bootloader1.png"><br><br>
+        <li>We will be using T1 as a timer source in the bootloader so we need to scroll further down to the interrupts, and switch the T1 to "Keep In Bootloader" as shown below.</li>
+        <img src="readme_new_bootloader_files/t1_interrupt.png"><br><br>
+        </ol>
+    </ol>
+    <h3>Adding Timer 1 to the project.</h3>
+    A timer for the CAN ISO TP layer is needed so add Timer 1 to the project.
+    <ol>
+        <li>Go to Device Resources, Timer and add TMR1 to the project</li>
+        <img src="readme_new_bootloader_files/add_tmr1.png"><br><br>
+        <li>Go to TMR1 Configuration and configure Timer to generate a 1msec Period.  This may require changing the prescaler</li>
+        <li>Enable the TMR1 Interrupts</li>
+        <img src="readme_new_bootloader_files/t1_configuration.png"><br><br>
+        
+    </ol>
+    <h3>Adding DMA to the project.</h3>
+    For CAN to operate, DMA is needed so this section will add DMA to the project and configured.
+    <ol>
+        <li>Go to Device Resources, and add both CAN1 and DMA to the project</li>
+        <img src="readme_new_bootloader_files/dma_add.png"><br><br>
+        <li>After adding these, go to the DMA Module</li>
+        <li>For Channel 0 select CAN1_TX shown below</li>
+        <li>For Channel 1 select CAN1_RX shown below</li>
+        <img src="readme_new_bootloader_files/dma_configure.png"><br><br>
+    </ol>
+
+    <h3>Adding CAN to the project.</h3>
+    Next, Add CAN to the project and configure it.
+    <ol>
+        <li>Go to Device Resources, and add CAN1 to the project</li>
+        <img src="readme_new_bootloader_files/can1_add.png"><br><br>
+        <li>Open the CAN1 Configuration Screen shown below.</li>
+        <li>Change CAN1 Bus Speed to 125kbs</li>
+        <li>Change Time Quanta to 10</li>
+        <li>Change Sample Point to 70%</li>
+        <img src="readme_new_bootloader_files/can1_config1.png"><br><br>
+        <li>Go to the Transmit-Receive Settings</li>
+        <li>Change DMA Buffer Size to 16</li>
+        <li>Select 1 Transmit Buffer</li>
+        <li>In Message ID Box, change value to 0xA1</li>
+        <li>Leave Mask as Mask 0 and Buffer as Receive Buffer RB1 and press the ADD button</li>
+        <img src="readme_new_bootloader_files/can1_config2.png"><br><br>
+        <li>Verify the Message ID in the Message Acceptance Filter shows 0xA1</li>
+        <img src="readme_new_bootloader_files/can1_config3.png"><br><br>
+    </ol>
+    <h3>Configuring the GPIO Pins.</h3>
+    For this project, four GPIO pins will be configured.  An RX and TX set of pins for the CAN.  1 GPIO input to monitor the value on the SW3 and one GPIO pin to control the LED D3 on the board.  The final configuration is shown below.
+    <ol>
+        <li>Open the Pin Manager, Grid View shown below</li>
+        <li>LED D3 is connected to RA0 so configure RA0 and a GPIO Output</li>
+        <li>Switch SW3 is connected to pin RD6 so configure RD6 and a GPIO Input</li>
+        <li>CAN1 TX is connected to the Click A port pin via GPIO Pin RF3</li>
+        <li>CAN1 RX is connected to the Click A port pin via GPIO Pin RF2</li>
+        <img src="readme_new_bootloader_files/gpio.png"><br><br>
+    </ol>    
+    <h3>Generating the project.</h3>
+    All of the peripherals have been configured and the next step is to generate the project.
+    <ol>
+        <li>Go to Project Resources and press Generate.  This should generate a large set of files for the project.</li>
+
+        <img src="readme_new_bootloader_files/generate.png"><br><br>
+        <li>Because CAN is being manually added to the bootloader project, we need to copy over the CAN ISO TP files from the current demo project.
+            The user needs to go to the example bootloader project, and go to the directory <b>ecan\boot.X\mcc_generated_files</b> and copy all of the files starting with can_tp to the same directory in the new project that was just created.</li>
+            <img src="readme_new_bootloader_files/copy_tp_files.png"><br><br>
+        <li>Next, go to the example bootloader project, and go to the directory <b>ecan\boot.X\mcc_generated_files\boot</b> and copy the file <b>com_adaptor_can.c</b> to the same directory in the new project that was just created.</li>
+        <img src="readme_new_bootloader_files/copy_can_adaptor_file.png"><br><br> 
+        <li>We now need to add these copied files to the project.  Go to the Projects, boot, Source Files, MCC Generated files and right click on the MCC Generated files and click on <b>Add Existing Items</b> The add the new .c files starting with can_tp to the project</li>    
+        <img src="readme_new_bootloader_files/add_tp_files1.png"><br><br> 
+        <li>Next go to the boot directory and add the existing item <b>com_adaptor_can.c</b></li>
+        <img src="readme_new_bootloader_files/add_tp_files2.png"><br><br> 
+        <li>Finally, since we just added the file <b>com_adaptor_can.c</b> to the project, we need to disable the project from using the file com_adaptor_uart.c.  So right click on the file <b>com_adaptor_uart.c</b> and exclude it from the build.</li>
+        <img src="readme_new_bootloader_files/exclude.png"><br><br> 
+    </ol>
+
+    <h3>Building the project.</h3>
+    <ol>
+        All of the files have now been added to the project and we can start compiling and enabling the CAN features to the program.  
+        <li>First, compile the project by pressing the clean and compile button.  This should compile the program with no errors.</li>
+        <li>The CAN initialization now needs to be added to the project by copying the <b>main.c</b> from the example code to the main.c file in the new project. The updated <b>main.c</b> code is shown below</li>
+    </ol>
+        <code> <pre>
+#include "mcc_generated_files/system.h"
+#include "mcc_generated_files/can1.h"
+#include "mcc_generated_files/can_tp.h"
+#include "mcc_generated_files/boot/boot_demo.h"
+
+/*
+                        Main application
+*/
+uint8_t rxBuffer[512];
+
+void TMR1_CallBack(void)
+{
+     CAN_TP_Tick();
+}
+
+int main(void)
+{
+    // initialize the device
+    
+    SYSTEM_Initialize();
+    BOOT_DEMO_Initialize();
+    
+    CAN_TP_Initialize();
+    CAN_TP_RxMessageBufferSet(rxBuffer, sizeof(rxBuffer)); 
+
+    CAN1_TransmitEnable(); 
+    CAN1_ReceiveEnable();
+
+    while (1)
+    {       
+        CAN_TP_Tasks();
+        BOOT_DEMO_Tasks();        
+    }
+        
+    return 1;
+}
+/**
+End of File
+*/
+            </pre>
+        </code>  
+
+    <h3>Updating the file boot_demo.c.</h3>
+    The final step is to add code to boot_demo.c to monitor switch SW3, turn on the LED and to disable TMR1 before branching to the application code.
+    The updated code is shown below.  
+    <ol>
+        <li>The line, #include "../pin_manager.h", was added at the beginning of the file</li>
+        <li>In the function BOOT_DEMO_Tasks(), IO_RA0_SetHigh() is called to set the LED D3 when the bootloader starts.</li>
+        <li>In the function BOOT_DEMO_Tasks(), before calling BOOT_StartApplication(), TMR1_Stop() is called to disable Timer 1 before running the application.</li> 
+        <li>In the function EnterBootloaderMode(), the IO_RD6_GetValue() is called to get the value of SW3.  A low means the button has been pushed.</li>
+</ol>
+    <code> <pre>
+#include "../memory/flash.h"
+#include "boot_process.h"
+
+#include &lt;stdbool.h&gt;
+#include &lt;stdint.h&gt;
+#include "boot_config.h"
+#include "../pin_manager.h"
+
+static bool inBootloadMode = false;
+
+static bool EnterBootloadMode(void);
+
+void BOOT_DEMO_Initialize(void)
+{    
+
+}
+
+void BOOT_DEMO_Tasks(void)
+{
+    IO_RA0_SetHigh();
+    if(inBootloadMode == false)
+    {
+        if( (EnterBootloadMode() == true) || (BOOT_Verify() == false) )
+        {
+            inBootloadMode = true;
+        }
+        else
+        {
+            TMR1_Stop();
+            BOOT_StartApplication();
+        }
+    }
+    
+    BOOT_ProcessCommand();
+}
+
+static bool EnterBootloadMode(void)
+{
+    //#warning "Update this function to return 'true' when you want to stay in the boot loader, and 'false' when you want to allow a release to the application code"
+ 
+    /* NOTE: This might be a a push button status on power up, a command from a peripheral, 
+     * or whatever is specific to your boot loader implementation */    
+    return (IO_RD6_GetValue()==0);
+    
+}
+</pre>
+</code>
+
+<h3>Verifying the Basic Bootloader Operation</h3>
+At this point the user should compile and download the code to the board.  When the code runs, LED D3 should light up.  To verify the code can communicate with the UBHA using CAN, we will repeat the process that was shown in other files. <br>
+
+<ol>
+    <li>Open UBHA</li>
+    <li>Change Device Architecture to PIC24</li>
+    <li>Change the Protocol to CAN</li>
+    <li>Verify the CAN settings under CAN->Settings match the settings in the embedded project as shown below.</li>
+    <img src="readme_new_bootloader_files/ubha1.png"><br><br> 
+    <li>Press <b>Read Device Settings</b> to cause the UBHA to read the device settings from the part.  This should result in the start and end addresses updating as shown below.</li>
+    <img src="readme_new_bootloader_files/ubha2.png"><br><br> 
+</ol>
+
+<h2>Creating the Application</h2>
+The next process will create an application that can be downloaded with the CAN bootloader.
+
+<h3>Creating the Application Project</h3>
+The first step is like before. Create a new project called <b>app</b> for your part.  Use the same part <b>dsPIC33EP512MU810</b> and the compiler 1.61.  A compiler version 1.60 or later is mandatory.</li>
+<img src="readme_new_bootloader_files/new_app_project.png"><br><br>
+
+Open MCC 
+
+<ol>
+<li>Go to Project Resources, System Module </li>
+  <li>Configure Clock to be 8000000 and Primary Oscillator</li>
+  <li>Enable the PLL and configure the PLL to generate a 40Mhz Fosc as shown below.</li>
+  <li>Disable the Auxiliary Clock if its not needed</li>
+  <img src="readme_new_bootloader_files/configure_clocks.png"><br><br>
+  <li>If you're using the debugger, configure the ICD for your setting.  For this board and PIM use PGEC1 and PCED1 </li>
+  <li>Finally, depending on your part you may want to allow multiple reconfigurations of the GPIO by switching to the register view and changing the IOL1WAY bit to "Allow Multiple reconfigurations"</li>
+  <img src="readme_new_bootloader_files/allow_reconfig.png"><br><br>
+  <li>For this project we will blink LED D3 on GPIO RA0 so we need to configure the GPIO RA0 as an output using the Pin Manager:Grid View as shown below</li>
+  <img src="readme_new_bootloader_files/allow_reconfig.png"><br><br>
+</ol>
+
+
+<h3>Creating Base Application Project</h3>
+<p>The application will blink the LED D3 on GPIO RA0 at 1 Hz.  To provide the timing information the Foundation Services:DELAY library is added to the project as shown below.</p>
+<img src="readme_new_bootloader_files/app_delay.png"><br><br><br>
+<p>
+Generate the code files by pressing the Generate Button in Resource Management shown below.  This will generate all code needed to for main.c to work.</p>
+<img src="readme_new_bootloader_files/app_generate.png"><br><br><br>
+
+<h3>Programming Application Project</h3>
+Open main.c and update the file with the code shown below.  This code will simply blink the LED at 1 Hz. <br><br>
+<code> <pre>
+#include "mcc_generated_files/system.h"
+#include "mcc_generated_files/pin_manager.h"
+#include "mcc_generated_files/delay.h"
+
+/*
+                         Main application
+ */
+int main(void)
+{
+    uint16_t counter = 0;
+    // initialize the device
+    SYSTEM_Initialize();
+    while (1)
+    {
+        // Add your application code
+        DELAY_milliseconds(1);
+        counter++;
+       
+        if ((counter % 500)==0)
+        {
+            IO_RA0_Toggle();
+        }
+
+    }
+    return 1; 
+}
+/**
+ End of File
+*/
+</pre>
+</code>    
+<br><br>
+Next compile and download this code to the board to verify that this base application blinks the LED.<br><br>
+<h3>Configuring the Base Application to use the Bootloader</h3>
+Finally the application project must be configured to use the bootloader.  This is done using the below steps.
+<ol>
+    <li>If not open, Open MCC for the application project </li>
+    <li>Go to the Device Resources->16-Bit Bootloader and add the 16-Bit Bootloader:application library to the project as shown below.</li>
+    <img src="readme_new_bootloader_files/app_add_bootlaoder.png"><br><br><br>
+    <li>The in the bootloader configuration screen, shown below, press the <b>Browse</b> button and enter the location of the bootloader project from before.  This will allow the MCC 16-Bit Bootloader:Application library to import all of the bootloader project configuration information into the application project.</li>
+    <img src="readme_new_bootloader_files/app_bootloader_location.png"><br><br><br>
+    <li>Once added, the application project settings window will show the user all of the settings imported and the notification box will show any issues found as shown below.  At this point its imperative that all of the device configuration settings are the same between the bootloader and application projects.</li>
+    <img src="readme_new_bootloader_files/app_location_added.png"><br><br><br>
+    <li>Go to the Project Resources and press the <b>Generate Button</b> again.  This will add any code needed to use the bootloader as well as updating the memory map and other settings.</li>
+    <li>Now compile the code.  It should compile with no warnings or error for this example and the code is now ready to download the code with the bootloader.</li>
+    </ol>
+    
+    <h2>Downloading the Application Code with the Bootloader and UBHA</h2>
+    <p>We are now ready to download the application code with the bootloader.</p>
+    <ol>
+        <li>First, since we tested the application on the board, we need to re-download the bootloader to the board.  Switch back to the bootloader and download and run the bootloader code on the board.  Do not use the debugger for this example.</li>
+        <li>After the code has been downloaded, LED D3 should come on and stay lite.</li>
+        <li>Go back to the UBHA program and if needed re-configure the UBHA to use the CAN module as done before.</li>
+        <li>Read the device settings from the device by pressing the "Read Device Settings" button on the board which should update the memory addresses as shown below.</li>
+        <img src="readme_new_bootloader_files/ubha3.png"><br><br> 
+        <li>Next, with the UBHA app, go to File -> Open / Load and select the application hex file.  This file will be located at "app.X\dist\default\production"</li>
+        <li>Program the application by pressing the <b>Program Device</b> button shown below.  As it's programming the status of each step will be displayed.</li>  
+        <img src="readme_new_bootloader_files/ubha4.png"><br><br> 
+        <li>If the option "Enable Reset" was left enable, the UBHA will send a command to reset the device and start running the application.  Which in this case, should cause the LED to start blinking.</li>
+    </ol>
+    <p> This is the end of this demo where we generated the CAN bootloader from scratch using the ECAN module for CAN.</p>
+
+</body>
+
+</html>
