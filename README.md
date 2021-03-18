@@ -19,10 +19,10 @@ There are 3 configurations provided in this demo:
 
 The hardware and software setup is different for each of these use cases.  There are readme*.html files associated with each folder that describe the required hardware and software as well as how to setup and run each of the corresponding demos.
 
-[dspic33ck-can](/pic24-dspic-can-canfd-bootloader/dspic33ck-can "dsPIC33CK256MP508 CAN based bootloader example project")
+[dspic33ck-can](/dspic33ck-can "dsPIC33CK256MP508 CAN based bootloader example project")
 
-[dspic33ck-canfd](/pic24-dspic-can-canfd-bootloader/dspic33ck-canfd "dsPIC33CK256MP508 CAN-FD based bootloader example project")
+[dspic33ck-canfd](/dspic33ck-canfd "dsPIC33CK256MP508 CAN-FD based bootloader example project")
 
-[dspic33ep-can2.0b](/pic24-dspic-can-canfd-bootloader/dspic33ep-can2.0b "dsPIC33EP512MU810 CAN based bootloader example project")
+[dspic33ep-can2.0b](/dspic33ep-can2.0b "dsPIC33EP512MU810 CAN based bootloader example project")
 
 
