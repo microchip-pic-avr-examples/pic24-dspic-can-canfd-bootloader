@@ -13,7 +13,7 @@
   @Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  16-bit Bootloader - 1.18.5-SNAPSHOT
+        Product Revision  :  16-bit Bootloader - 1.18.4
         Device            :  dsPIC33EP512MU810
     The generated drivers are tested against the following:
         Compiler          :  XC16 v1.36B
@@ -56,7 +56,7 @@ Copyright (c) [2012-2019] Microchip Technology Inc.
 #define BOOT_PRIVATE_H
 
 #include "boot_config.h" 
-#define MINIMUM_WRITE_BLOCK_SIZE 8u
+#define MINIMUM_WRITE_BLOCK_SIZE 8
 
 #define SIZE_OF_CMD_STRUCT_0 11
 struct __attribute__((__packed__)) CMD_STRUCT_0{
@@ -116,7 +116,7 @@ struct __attribute__((__packed__)) RESPONSE_TYPE_0_WITH_PAYLOAD{
     uint32_t address;
     //---
     uint8_t success;    
-    uint8_t data[BOOT_CONFIG_MAX_PACKET_SIZE - SIZE_OF_CMD_STRUCT_0 - 1u];
+    uint8_t data[BOOT_CONFIG_MAX_PACKET_SIZE - SIZE_OF_CMD_STRUCT_0 - 1];
 }; 
 struct __attribute__((__packed__)) GET_MEMORY_ADDRESS_RANGE_RESPONSE{
     uint8_t  cmd;

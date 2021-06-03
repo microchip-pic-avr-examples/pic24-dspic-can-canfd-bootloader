@@ -47,6 +47,7 @@
 */
 #include "mcc_generated_files/system.h"
 #include "mcc_generated_files/pin_manager.h"
+#include "mcc_generated_files/delay.h"
 
 /*
                          Main application

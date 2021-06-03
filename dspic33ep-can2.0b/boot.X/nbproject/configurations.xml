@@ -58,7 +58,6 @@
           <itemPath>mcc_generated_files/boot/com_adaptor_can.c</itemPath>
         </logicalFolder>
         <logicalFolder name="docs" displayName="docs" projectFiles="true">
-          <itemPath>mcc_generated_files/docs/delay.dox</itemPath>
         </logicalFolder>
         <logicalFolder name="memory" displayName="memory" projectFiles="true">
           <itemPath>mcc_generated_files/memory/flash.s</itemPath>
@@ -134,6 +133,7 @@
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
       </makeCustomizationType>
       <C30>
+        <property key="appendMe" value=""/>
         <property key="code-model" value="default"/>
         <property key="const-model" value="default"/>
         <property key="data-model" value="default"/>
@@ -200,6 +200,7 @@
       </C30-CO>
       <C30-LD>
         <property key="additional-options-use-response-files" value="false"/>
+        <property key="appendMe" value=""/>
         <property key="boot-eeprom" value="no_eeprom"/>
         <property key="boot-flash" value="no_flash"/>
         <property key="boot-ram" value="no_ram"/>
