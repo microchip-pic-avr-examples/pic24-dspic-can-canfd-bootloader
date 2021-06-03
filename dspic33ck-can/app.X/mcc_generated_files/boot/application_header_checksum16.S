@@ -59,7 +59,7 @@ Copyright (c) [2012-2019] Microchip Technology Inc.
 
 #include "boot_config.h"
 
-#error "A script to append verification checksum has been added to your project. You must add a call to it as a post-build step in your project properties. Delete this warning after you have done so."  
+//#error "A script to append verification checksum has been added to your project. You must add a call to it as a post-build step in your project properties. Delete this warning after you have done so."  
 /*
 * Steps to append verification checksum to the project hex file:  
 * 1. Right click on your project, and click 'Properties'.
