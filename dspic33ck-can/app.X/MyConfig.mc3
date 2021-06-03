@@ -9,24 +9,24 @@
          <string>class com.microchip.mcc.mcu16.mainManager.MainManager</string>
       </entry>
       <entry>
-         <string>WATCHDOG</string>
-         <string>class com.microchip.mcc.mcu16.systemManager.wdt.Wdt</string>
-      </entry>
-      <entry>
          <string>Pin Module</string>
          <string>class com.microchip.mcc.mcu16.pinManager.PinManager</string>
+      </entry>
+      <entry>
+         <string>WATCHDOG</string>
+         <string>class com.microchip.mcc.mcu16.systemManager.wdt.Wdt</string>
       </entry>
       <entry>
          <string>DMT</string>
          <string>class com.microchip.mcc.mcu16.systemManager.dmt.DMT</string>
       </entry>
       <entry>
-         <string>ICD</string>
-         <string>class com.microchip.mcc.mcu16.systemManager.icd.Icd</string>
-      </entry>
-      <entry>
          <string>RESET</string>
          <string>class com.microchip.mcc.mcu16.systemManager.reset.RESET</string>
+      </entry>
+      <entry>
+         <string>ICD</string>
+         <string>class com.microchip.mcc.mcu16.systemManager.icd.Icd</string>
       </entry>
       <entry>
          <string>Interrupt Module</string>
@@ -57,7 +57,7 @@
       <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.mcu16.Mcu16PeripheralLibrary" version="1.169.2"/>
       <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.boardsupportlibrary.BoardSuppportLibrary" version="1.12.0"/>
       <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.foundationservices.library.FoundationServicesLibrary" version="0.2.2"/>
-      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.bootloader16.mcc.Library" version="1.18.4-SNAPSHOT"/>
+      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.bootloader16.mcc.Library" version="1.18.4"/>
    </usedLibraries>
    <tokenMap class="java.util.HashMap">
       <entry>
@@ -14062,7 +14062,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="16-bit Bootloader" name="state"/>
-         <value>{&quot;contractPath&quot;:&quot;..\\..\\boot&quot;}</value>
+         <value>{&quot;contractPath&quot;:&quot;..\\boot.X&quot;}</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="Pin Module" registerAlias="CNEN0C" settingAlias="CNIE0C0"/>
