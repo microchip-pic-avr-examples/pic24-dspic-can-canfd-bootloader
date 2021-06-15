@@ -35,13 +35,13 @@
                      projectFiles="true">
         <logicalFolder name="boot" displayName="boot" projectFiles="true">
           <itemPath>mcc_generated_files/boot/user_interrupt_table.S</itemPath>
-          <itemPath>mcc_generated_files/boot/certificate_checksum16.S</itemPath>
           <itemPath>mcc_generated_files/boot/memory_partition.S</itemPath>
           <itemPath>mcc_generated_files/boot/interrupts.S</itemPath>
           <itemPath>mcc_generated_files/boot/postBuild.sh</itemPath>
           <itemPath>mcc_generated_files/boot/combineAppAndBootloaderHex.sh</itemPath>
           <itemPath>mcc_generated_files/boot/hardware_interrupt_table.S</itemPath>
           <itemPath>mcc_generated_files/boot/remapped_reset.S</itemPath>
+          <itemPath>mcc_generated_files/boot/application_header_checksum16.S</itemPath>
         </logicalFolder>
         <logicalFolder name="docs" displayName="docs" projectFiles="true">
           <itemPath>mcc_generated_files/docs/delay.dox</itemPath>
@@ -107,6 +107,7 @@
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
+        <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>true</makeCustomizationPostStepEnabled>
         <makeCustomizationPostStep>cd mcc_generated_files/boot &amp;&amp; postBuild.bat $(MP_CC_DIR)</makeCustomizationPostStep>

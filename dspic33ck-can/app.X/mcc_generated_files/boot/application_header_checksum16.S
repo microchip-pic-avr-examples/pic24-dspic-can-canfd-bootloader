@@ -5,15 +5,15 @@
     Microchip Technology Inc.
 
   @File Name: 
-    certificate_checksum16.S
+    application_header_checksum16.S
 
   @Summary:
-    This is the certificate_checksum16.S file generated using 16-bit Bootloader
+    This is the application_header_checksum16.S file generated using 16-bit Bootloader
 
   @Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  16-bit Bootloader - 1.18.4-SNAPSHOT
+        Product Revision  :  16-bit Bootloader - 1.18.4
         Device            :  dsPIC33CK256MP508
     The generated drivers are tested against the following:
         Compiler          :  XC16 v1.36B
@@ -53,7 +53,7 @@ Copyright (c) [2012-2019] Microchip Technology Inc.
     such restrictions will not apply to such third party software.
 */
 
-/* This file puts a certificate at the start of the application image that the
+/* This file puts an application header at the start of the application image that the
  * bootloader will use to verify the integrity of the application image.
  */
 
@@ -71,7 +71,7 @@ Copyright (c) [2012-2019] Microchip Technology Inc.
 * 5. Delete or comment out the #error message above
 */
 
-    .section .certificate_checksum16, code, address(BOOT_CONFIG_APPLICATION_IMAGE_CERTIFICATE_ADDRESS), keep
+    .section .application_header_checksum16, code, address(BOOT_CONFIG_APPLICATION_IMAGE_APPLICATION_HEADER_ADDRESS), keep
     
     /* Skip the instruction that holds the Checksum - this will have to be injected
      * by a tool later, but we need to reserve the space for it. 
