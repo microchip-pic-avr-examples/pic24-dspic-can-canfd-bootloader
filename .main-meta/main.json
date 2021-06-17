@@ -1,10 +1,10 @@
 {
-   "metaDataVersion":"1.0.0",
+   "metaDataVersion":"1.0.1",
    "category":"com.microchip.ide.project",
    "content":{
-      "metaDataVersion":"1.0.0",
+      "metaDataVersion":"1.0.1",
       "name":"com.microchip.mplabx.project.pic24-dspic-can-canfd-bootloader",
-      "version":"1.0.0",
+      "version":"1.0.1",
       "displayName":"PIC24/dsPIC CAN/CAN-FD Bootloader",
       "projectName":"pic24-dspic-can-canfd-bootloader",
       "shortDescription":"CAN and CAN-FD bootloader example using the ISO-15765-2 CAN transport layer for the PIC24 and dsPIC product lines.",
@@ -25,10 +25,10 @@
          "semverRange": ">=4.0.1"
       },
       "device":{
-         "metaDataVersion":"1.0.0",
+         "metaDataVersion":"1.0.1",
          "category":"com.microchip.portal.contentRef",
          "content":{
-            "metaDataVersion":"1.0.0",
+            "metaDataVersion":"1.0.1",
             "category":"com.microchip.device",
             "name":"dsPIC33CK256MP508",
             "versionRange":"*"
