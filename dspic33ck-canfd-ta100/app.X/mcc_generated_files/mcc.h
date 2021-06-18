@@ -53,11 +53,11 @@
 #include "system_types.h"
 #include "reset.h"
 
-#include "reset.h"
-#include "delay.h"
 #include "watchdog.h"
 #include "interrupt_manager.h"
 #include "traps.h"
+#include "reset.h"
+#include "delay.h"
 
 #warning "This file will be removed in future MCC releases. Use system.h instead."
 

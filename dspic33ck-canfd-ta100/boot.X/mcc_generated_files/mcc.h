@@ -54,17 +54,17 @@
 #include "reset.h"
 
 #include "watchdog.h"
-#include "uart1.h"
-#include "tmr1.h"
-#include "spi1_driver.h"
 #include "memory/flash.h"
-#include "boot/boot_process.h"
-#include "reset.h"
-#include "can1.h"
 #include "drivers/spi_master.h"
 #include "interrupt_manager.h"
 #include "traps.h"
+#include "can1.h"
+#include "boot/boot_process.h"
+#include "tmr1.h"
+#include "spi1_driver.h"
 #include "delay.h"
+#include "uart1.h"
+#include "reset.h"
 
 #warning "This file will be removed in future MCC releases. Use system.h instead."
 

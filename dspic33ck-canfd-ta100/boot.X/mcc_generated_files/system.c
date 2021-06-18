@@ -124,16 +124,16 @@
 #include "clock.h"
 #include "system.h"
 #include "system_types.h"
-#include "uart1.h"
-#include "tmr1.h"
-#include "spi1_driver.h"
 #include "memory/flash.h"
-#include "boot/boot_process.h"
-#include "can1.h"
 #include "drivers/spi_master.h"
 #include "interrupt_manager.h"
 #include "traps.h"
+#include "can1.h"
+#include "boot/boot_process.h"
+#include "tmr1.h"
+#include "spi1_driver.h"
 #include "delay.h"
+#include "uart1.h"
 
 void SYSTEM_Initialize(void)
 {

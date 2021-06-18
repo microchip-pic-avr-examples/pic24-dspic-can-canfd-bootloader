@@ -4,13 +4,13 @@
     "name": "UART1"
   },
   "memoryPartition": 0,
-  "applicationResetAddress": 12288,
+  "applicationResetAddress": 32768,
   "maxPayloadSize": 256,
   "version": "1.4",
-  "bootloaderEndAddressExclusive": 12288,
-  "applicationStartAddress": 12288,
+  "bootloaderEndAddressExclusive": 32768,
+  "applicationStartAddress": 32768,
   "applicationEndAddress": 178174,
-  "userIvtTableAddress": 12800,
+  "userIvtTableAddress": 33280,
   "interrupts": [
     {
       "name": "OscillatorFail",
@@ -1208,7 +1208,11 @@
       "value": "PRIPLL"
     }
   ],
-  "verification": "Checksum",
+  "verification": "ECDSA with ATECC608",
+  "verificationPayload": {
+    "publicKeyPath": "public_key.pem",
+    "privateKeyPath": "private_key.pem"
+  },
   "bootloaderFoscValue": 100000000,
   "isCodeProtectEnabled": false
 }
