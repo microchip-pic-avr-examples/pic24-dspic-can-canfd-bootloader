@@ -1,0 +1,360 @@
+<html>
+
+<head>
+  <style>
+    h2 {
+      text-decoration: bold;
+    }
+
+    h3 {
+      text-decoration: underline;
+    }
+
+    ol,ul {
+      line-height: 200%;
+    }
+  </style>
+</head>
+
+<body lang=EN-US link=blue vlink=purple>
+  <h1>Creating the Bootloader Example Using a CAN-FD Physical Layer</h1>
+
+  <h2>Introduction</h2>
+  This example will show how to create a CAN-FD Bootloader DEMO from scratch using the dsPIC33CK256MP508 processor module for the Explorer
+  16/32 board.
+  This demo uses the ISO 15765-2 CAN Transport Protocol layer to transport custom bootloader commands over the CAN bus
+  as seen in the diagram below:<br>
+  <img src="readme_files/stack.png"><br>
+  <h2>Tools</h2>
+
+  <h3>Software</h3>
+  <ol>
+    <li><a href="https://www.microchip.com/mplabx">Microchip MPLAB® X version 5.40 or later</a></li>
+    <li><a href="https://www.microchip.com/en-us/development-tools-tools-and-software/mplab-xc-compilers">Microchip MPLAB® XC16 C compiler version 1.60 or later</a></li>
+    <li><a href="https://www.microchip.com/16-bit-Bootloader">Unified Bootloader Host Application v1.16.4 or later</a></li>
+    <li>Microchip MPLAB® Code Configurator version v4.0.1 or later</a> (optional – for code configuration)</li>
+    <li>16-bit Bootloader MCC module version 1.18.3 or later (optional – for code configuration)</li>
+  </ol>
+  
+  <h3>Hardware</h3>
+  <ol>
+    <li><a href="https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM240001-2">Explorer 16/32 Demo board</a> </li>
+    <li><a href="https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/MA330042">dsPIC33CK256MP508 Processor</a>  or other Processors with the Microchip CAN-FD module</li>
+    <li>A programmer/debugger of choice</li>
+    <li>A Peak CAN protocol analyzer/protocol generator. A PCAN-USB FD was used for development of this demo
+      (https://www.peak-system.com/PCAN-USB-FD.365.0.html?&L=1).</li>
+    <li>A CAN cable</li>
+    <li>An MCP2542 click board (https://www.mikroe.com/mcp2542-click) or another appropriate CAN transceiver click
+      board.
+      It is important that this is just a transceiver and not a CAN-to-SPI/UART converter chip.</li>
+    <li>A micro USB cable, a USB-Type C cable, or a 9v power adapter for the Explorer 16/32 (for powering the board).
+    </li>
+  </ol>
+
+  <h2>Running the Demo</h2>
+
+  <h3>Hardware Configuration</h3>
+  <ol>
+    <li>With the Explorer 16/32 detached from any power source, programmer, or USB connection:</li>
+    <ol type="a">
+      <li>Connect the dsPIC33CK256MP508 processor module into the socket on the Explorer 16/32 such that the notched
+        edge is
+        in the top left corner matching the silk screen on the Explorer 16/32</li>
+      <li>Connect the MCP2542 daughter board into the mikroBUS™ A slot.</li>
+    </ol>
+    <li>Connect the programmer to the Explorer 16/32</li>
+    <li>Connect the Peak analyzer/generator to your computer.</li>
+    <li>Connect the Peak analyzer/generator to the MCP2543 daughter board with the CAN cable.</li>
+    <li>Power the board using either USB cable or the 9 volt adapter plug.</li>
+  </ol>
+  <img src="readme_files/hardware.jpg"><br><br>
+
+  <h3>Creating the Bootloader Project</h3>
+  <ol>
+    <li>Open MPLAB® X and press the new project icon</li>
+    <li>Select the Standalone Project and press Next.</li>
+    <img src="readme_new_bootloader_files/new_project.png"><br><br>
+    <li>Enter the device name with the CAN-FD controller.  For this example, "dsPIC33CK256MP508".</li>
+    <li>Enter the Tool that your using and press Next.</li>
+    <img src="readme_new_bootloader_files/select_device.png"><br><br>
+    <li>Select your compiler. Version 1.60 or later and press Next.</li>
+    <img src="readme_new_bootloader_files/compiler.png"><br><br>
+    <li>Name your project and select the project location and press Finish.</li>
+    <img src="readme_new_bootloader_files/boot_name.png"><br><br>
+  </ol>
+
+  <h3>Adding the 16-Bit Bootloader to the project</h3>
+  After the base project as been built, the next step is to add the bootloader and features to the project.
+  <ol>
+    <li>Open MCC by selecting the MCC Icon and press Save when prompted to save the project</li>
+    <img src="readme_new_bootloader_files/add_mcc.png"><br><br>
+    <li>Select the 16-Bit Bootloader:Bootloader library by pressing the green plus sign "+".</li>
+    <img src="readme_new_bootloader_files/add_bootloader.png"><br><br>
+    <li>Select "Protocol for communication" and select UART1. (This will be later removed from being compiled.) </li>
+    <li>Change Bootloader end address to 0x5000.</li>
+    <li>Leave Verification Scheme as Not Blank.</li> 
+    <img src="readme_new_bootloader_files/config_bootloader1.png"><br><br>
+    <li>Since we will need a interrupt driven timer in the bootloader, scroll down to the Interrupt Vector Table and configure T1Interrupt as "Keep In Bootloader"</li> 
+    <img src="readme_new_bootloader_files/timer_interrupt.png"><br><br>
+    <li>To generate the base Bootloader files for the project, press <b>Generate</b> as shown below</li> 
+    <img src="readme_new_bootloader_files/bootloader_generate.png"><br><br>
+    </ol>
+
+  <h3>Configuring the system clocks to support 80 Mhz needed for our CAN-FD configuration.</h3>
+  To allow the bootloader to support the maximum number of CAN-FD frequencies, we will use a 80 Mhz clock for the CAN-FD module.  You may use a slower one if you do not need this fast of clock.
+  <ol>
+    <li>Goto Project Resources --> System Module to view the System Clock Settings.</li>
+    <img src="readme_new_bootloader_files/system_clock0.png"><br><br>
+    <li>Change the clock to 8000000 Primary Oscillator.</li>
+    <li>Enable the PLL.</li>
+    <li>Change the Feedback to 1:200.</li>
+    <li>If Enabled, disable the Auxillary Clock.</li>
+    <li>Change CAN FD Clock Generator to FPLLO - 400Mhz.</li>
+    <li>Change the Requested SCAN to 80 Mhz.</li>
+    <li>For debugging, and for this device, change the ICD to PCG3 and PGD3.</li>
+    <img src="readme_new_bootloader_files/system_clock.png"><br><br>
+  </ol>
+
+
+  <h3>Adding CAN-FD to the 16-Bit Bootloader project</h3>
+  After the base bootloader project as been generated, the next step is to add CAN-FD module to the project.  For this example, the Nominal Bit Rate will be 500Kbps and the Data Bit Rate will be 2Mbps.
+ 
+  <ol>
+    <li>Goto Device Resources, and add CAN FD1 by pressing the green plus sign "+" next to it.</li>
+    <img src="readme_new_bootloader_files/add_can_fd.png"><br><br>
+    <li>Clock Freq should be 80Mhz.</li>
+    <li>Change Nominal Bit Rate to 500 Kbps.</li>
+    <li>Change Sample Point to 71.250%.</li>
+    <li>Enable Step 2(b) Data Bit Rate Settings.</li>
+    <li>Change Data Bit Rate to 2 Mbps.</li>
+    <li>Change Sample Point to 60%.</li>
+    <img src="readme_new_bootloader_files/fd_config1.png"><br><br>
+  </ol>
+
+  <h4>Step 3 - General Settings</h4>
+  <ol>
+    <li>Verify that Step 3 just has Enable ISO CRC selected.</li>
+    <img src="readme_new_bootloader_files/can_config_1a.png"><br><br>
+  </ol>
+
+  <h4>Step 4 - FIFO Settings</h4>
+  <ol>
+    <li>Goto Step 4, and select FIFO1 from drop down box and press Add.</li>
+    <img src="readme_new_bootloader_files/fd_config2.png"><br><br>
+    <li>Increase Payload Size to 64 Bytes.</li>
+    <img src="readme_new_bootloader_files/fd_config3.png"><br><br>
+    <li>Select FIFO2 from drop down box and press Add.</li>
+    <img src="readme_new_bootloader_files/fd_config4.png"><br><br>
+    <li>Increase Payload Size to 64 Bytes, increase FIFO Depth to 2 and Change Operation to RX.</li>
+    <img src="readme_new_bootloader_files/fd_config5.png"><br><br>
+  </ol>
+
+  <h4>Step 5 - Filter Object Settings</h4>
+  We need to next configure the filter to only respond to messages with the ID 0xA1
+  <ol>
+    <li>Goto Step 5, and select Filter 0 from drop down box and press Add.</li>
+    <img src="readme_new_bootloader_files/fd_filter0.png"><br><br>
+    <li>For the Receive FIFO, change to FIFO2 and Enter 0xA1 into the Message ID.</li>
+    <img src="readme_new_bootloader_files/fd_Filter1.png"><br><br>
+  </ol>
+
+  <h3>CAN-FD GPIO Settings</h4>
+   After configureing the CAN-FD Module, we need to connect it to the GPIO pins.  For this part, the CAN-RX needs to be connected to GPIO D0 and the CAN-TX needs to be connected to GPIO D1.  This is shown in the Pin Manager below. <br><br>
+   <img src="readme_new_bootloader_files/can_gpio.png"><br><br>
+  <h3>Adding Timer 1 to the project</h4>
+  The ISO-TP stack requires the use of a timer to generate timing information for the handshakes.  In this section we will add the Timer 1 to the project
+  <ol>
+    <li>Goto Device Resources, scroll down and enable Timer 1 by pressing the green plus sign "+".</li>
+    <img src="readme_new_bootloader_files/timer_resource.png"><br><br>
+    <li>Configure Timer 1 by setting a timer period of 1ms shown below.  This will require first changing the prescaler to 1:64 and then changing the Timer Period to 1 ms.</li>
+    <li>Enable the Timer Interrupt by checking the Timer Interrupt Enable Box.</li>
+    <img src="readme_new_bootloader_files/timer1_config.png"><br><br>
+  </ol>
+
+
+  <h3>Adding LED and Switch to Bootloader</h3>
+  The bootloader will use an LED to indicate that it's running and will use a switch to force entry into the bootloader.  So we need to add these to the project as well.  
+  For this board and PIM we will use LED D3 connected to GPIO RE0.  The switch SW3 is connected to GPIO RB14 and is driven low when pressed.
+  <ol>
+    <li>Open Pin Manager and configure GPIO RE0 as an output and GPIO RB14 as an input. </li>
+  </ol>
+
+  <h3>Generating the code.</h3>
+  Now press the Generate Button on Project resources shown below.  This will generate the final code needed for the CAN-FD bootloader.
+  <img src="readme_new_bootloader_files/generate1.png"><br>
+
+
+  <h3>Removing UART from project</h3>
+  In building the bootloader, we added UART for the default boot communication protocol.  We will now remove the UART and install the CAN_FD as the communication device.
+  <h4>Remove com_adaptor_uart.c from being compiled.</h4>
+  <ol>
+    <li>Open Projects and then right click on com_adaptor_uart.c and select "Exclude Files(s) from Current project"</li>
+    <img src="readme_new_bootloader_files/remove_uart1.png"><br><br>
+    <li>Open the original canfd/boot.X/mcc_generated_files directory and copy the following files from this directory to the "mcc_generated_files" of the new project.</li>
+     <ul>
+      <li>can_tp.c</li>
+      <li>can_tp.h</li>
+      <li>can_tp_config.h</li>
+      <li>can_tp_phy_adaptor.c</li>
+      <li>can_tp_phy_adaptor.h</li>
+     </ul><br><br>
+     <li>Next, Open the original canfd/boot.X/mcc_generated_files/boot directory and copy the file <b>com_adaptor_can.c</b>" this directory to the "mcc_generated_files/boot" of the new project.</li>
+     <li>Add the 2 new C files to this project by going to Projects, and right clicking on "MCC Generated Files" and selecting Add Existing Existing Item.</li>
+     <img src="readme_new_bootloader_files/add_new_files1.png"><br><br>
+     <li>Select the two C files just added </li>
+     <img src="readme_new_bootloader_files/add_new_files2.png"><br><br>
+     <li>Repeat the above process and add the file Add the file <b>boot.X/mcc_generated_files/boot/com_adaptor_can.c</b> to the project as well.</li>
+     <img src="readme_new_bootloader_files/add_new_files3.png"><br><br>
+  </ol>   
+    
+  <h3>Adding code for LED D3 and switch SW3</h3>
+  To enable the LED D3 connected to GPIO RE0, we will open the file boot_demo.c and add the following code.
+  <ol>
+    <li>Add <b>#include "../pin_manager.h"</b> at the top of the file.</li>
+    <li>At the top of BOOT_DEMO_Tasks() add the following code to turn on the LED.</li>
+    <code>
+      void BOOT_DEMO_Tasks(void)<br>
+{<br>
+    <b>// Turn on LED to indicate bootloader mode.</b><br>
+    <b>IO_RE0_SetHigh();</b><br>
+    </code><br><br>
+    <li>Add the following line of code in EnterBootloaderMode(void) towards the bottom of file.  This will return the status of the button SW3</li>
+    <code>return (IO_RB14_GetValue() == 0);    </code>
+
+    <h3>Disable Timer1 when before running the Application</h3>
+    Before running the application, we need to disable any units that could affect the application.  One of these items is to disable Timer 1 which is generating 1ms interrupts before running the application.
+    <ol>
+      <li>Add <b>#include "../tmr1.h"</b> at the top of boot_demo.c</li>
+      <li>Add the call to the function <b>TMR1_Stop()</b> in BOOT_DEMO_Tasks() as shown below.</li>
+      <img src="readme_new_bootloader_files/dis_tmr1.png"><br><br>
+  </ol>  
+  </ol>  
+
+
+
+  <h3>Updating main.c withCAN  bootloader code </h3>
+  The next step is to update the file main.c with code needed to support CAN-FD.  The 4 updates to main.c are listed below.<br><br>
+  <img src="readme_new_bootloader_files/update_main1.png"><br><br>
+  <ol>
+    <li>Add the two #include statements to include can1.h and can_tp.h</li>
+    <li>Create the buffer named rxBuffer below and add the TMR1_Callback() funtion below right above main().</li>
+    <li>Add the two CAN_TP calls at the beginning of main().</li>
+    <li>Add the CAN_TP_Tasks() to the while(1) loop.</li><br>
+    </ol>
+<code>    
+#include "mcc_generated_files/system.h"<br>
+#include "mcc_generated_files/boot/boot_demo.h"<br>
+#include "mcc_generated_files/can1.h"<br>
+#include "mcc_generated_files/can_tp.h"<br>
+<br>
+uint8_t rxBuffer[512];<br>
+<br>
+void TMR1_CallBack(void)<br>
+{<br>
+    CAN_TP_Tick();<br>
+}<br>
+<br>
+<br>
+/*<br>
+                         Main application<br>
+ */<br>
+int main(void)<br>
+{<br>
+    // initialize the device<br>
+    SYSTEM_Initialize();<br>
+    BOOT_DEMO_Initialize(); <br>
+    <br>
+    <b>CAN_TP_Initialize();</b><br>
+    <b>CAN_TP_RxMessageBufferSet(rxBuffer, sizeof(rxBuffer)); </b><br>
+    <br>
+    while (1)<br>
+    {<br>
+        <b>CAN_TP_Tasks();</b><br>
+        // Add your application code<br>
+        BOOT_DEMO_Tasks();<br>
+    }<br>
+    return 1; <br>
+}<br>
+
+</code><br>
+
+
+
+ <h2>Creating the Application</h2>
+ 
+ To create the application, we need to first create a new project for the device just like before.  
+ <ol>
+ 
+ <li>This time, lets name the project "app" using the same device as before(dsPIC33CK256MP508).</li>
+ <img src="readme_new_bootloader_files/create_app1.png"><br><br>
+ <li>Open MCC by pressing the MCC icon as before.</li>
+ <li>Goto the Device resources and add the 16-bit Bootloader:Application library to the project.</li>
+ <img src="readme_new_bootloader_files/create_app2.png"><br><br>
+ <li>After the bootloader:Application library is loaded, the Application library will ask for the location of the bootloader project.  So browse to the path of the bootloader project as shown below.</li><br>
+ <img src="readme_new_bootloader_files/add_app_bootloader.png"><br><br>
+ <li>We will use the Delay library so goto Prject Resources and under Foundation Services, add the "Delay" library</li><br>
+ <img src="readme_new_bootloader_files/delay1.png"><br><br>
+ </ol>
+
+ <h3>Configuring the clocks to match the bootloader</h3>
+ We need to configure the system clocks of the application to match the bootloader.  This is needed to make sure there are no differences between the bootloader and application's configuration.
+ <ol>
+  <li>Goto Project Resources --> System Module to view the System Clock Settings.</li>
+  <img src="readme_new_bootloader_files/system_clock0.png"><br><br>
+  <li>Change the clock to 8000000 Primary Oscillator.</li>
+  <li>Enable the PLL.</li>
+  <li>Change the Feedback to 1:200.</li>
+  <li>If Enabled, disable the Auxillary Clock.</li>
+  <li>Change CAN FD Clock Generator to FPLLO - 400Mhz.</li>
+  <li>Change the Requested SCAN to 80 Mhz.</li>
+  <li>For debugging, and for this device, change the ICD to PCG3 and PGD3.</li>
+  <img src="readme_new_bootloader_files/system_clock.png"><br><br>
+</ol>
+
+<h3>Adding LED to the Application</h3>
+The application will blink LED D3, connected to GPIO RE0, to indicate that it's running.
+<ol>
+  <li>Open Pin Manager and configure GPIO RE0 as an output </li><br>
+  <img src="readme_new_bootloader_files/app_gpio.png"><br><br>
+</ol>
+
+<h3>Generating the Application</h3>
+Goto the Project resources and press the generate button.  This should generate with no warnings.<br><br>
+<img src="readme_new_bootloader_files/generate_app.png"><br><br>
+
+<h3>Adding Code to the Application</h3>
+Next add the code to blink the LED to the application.
+<ol>
+  <li>Open the Application main.c </li><br>
+  <li>At the top of the file, add includes the pin_manager.h and the delay.h files.</li><br>
+  <li>Create an unsigned int varaible named counter.</li><br>
+  <li>Add code to blink the LED every 500 milliseconds.</li><br>
+  <img src="readme_new_bootloader_files/app_main.png"><br><br>
+</ol>
+
+
+<h3>Downloading the Application</h3>
+We have now created an Bootloader utilizing the CAN-FD module.  The user can now use the instructions in <a href="readme.html">readme</a> to further modify these prjects.
+
+  <h2>Terminology</h2>
+  <b>ISO 15765-2 / CAN-TP / ISO-TP</b>
+  <p>
+    ISO 15765-2 is a transport protocol layer designed for usage with the CAN bus. The original CAN bus specifically
+    allows for up to 8 bytes of data to be in a single frame. Larger messages need to be fragmented into smaller frames
+    for transmission on the CAN bus. ISO 15765-2 defines a protocol for fragmenting larger messages and sending them
+    over the CAN bus. It also incorporates flexibility in handling the data transmission through the use of flow control
+    packets to control the frequency of when packets arrive as well allowing to pause the transmission of a message
+    until the receiver is ready to receive the message.</p>
+  <b>MCC</b>
+  <p>Microchip’s MPLAB® Code Configurator tool. This tool helps configure and generate source code for peripherals and
+    libraries.</p>
+  <b>UBHA - Unified Bootloader Host Application</b>
+  <p>The PC application used to send the firmware update and verification commands
+    from the PC to the board to complete the firmware update.</p>
+  <h2>Trademarks</h2>
+  MPLAB® is a registered trademark of Microchip Technology Inc. All other trademarks are the property of their
+  respective owner.
+
+</body>
+
+</html>
