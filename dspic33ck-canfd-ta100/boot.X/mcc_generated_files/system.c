@@ -135,6 +135,8 @@
 #include "delay.h"
 #include "uart1.h"
 
+#include "CryptoAuth_init.h"
+
 void SYSTEM_Initialize(void)
 {
     BOOT_Initialize();
@@ -143,7 +145,8 @@ void SYSTEM_Initialize(void)
     INTERRUPT_Initialize();
     CAN1_Initialize();
     UART1_Initialize();
-    TMR1_Initialize();
+    CryptoAuth_Initialize();
+	TMR1_Initialize();
     INTERRUPT_GlobalEnable();
     SYSTEM_CORCONModeOperatingSet(CORCON_MODE_PORVALUES);
 }
