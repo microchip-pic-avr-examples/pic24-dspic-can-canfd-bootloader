@@ -20,6 +20,7 @@
     TERMS.
 */
 
+#include <stdbool.h>
 #include "CryptoAuth_init.h"
 
 struct atca_command  _gmyCommand;
@@ -29,9 +30,6 @@ struct atca_device   _gMyDevice = {&_gmyCommand, &_gmyIface};
 ATCAIfaceCfg secureCfg = {
     .iface_type             =   ATCA_SPI_IFACE,
     .devtype                =   TA100,
-    .atcai2c.slave_address  =   0x2E,
-    .atcai2c.bus            =   2,
-    .atcai2c.baud           =   100000,
     .wake_delay             =   1560,
     .rx_retries             =   20
 };

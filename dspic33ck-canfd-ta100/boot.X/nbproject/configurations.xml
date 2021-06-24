@@ -292,7 +292,6 @@
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
       </makeCustomizationType>
       <C30>
-        <property key="appendMe" value=""/>
         <property key="code-model" value="default"/>
         <property key="const-model" value="default"/>
         <property key="data-model" value="default"/>
@@ -361,7 +360,6 @@
       </C30-CO>
       <C30-LD>
         <property key="additional-options-use-response-files" value="false"/>
-        <property key="appendMe" value=""/>
         <property key="boot-eeprom" value="no_eeprom"/>
         <property key="boot-flash" value="no_flash"/>
         <property key="boot-ram" value="no_ram"/>
@@ -470,7 +468,6 @@
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="false"/>
