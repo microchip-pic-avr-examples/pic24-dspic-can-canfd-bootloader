@@ -17,11 +17,11 @@
 </head>
 
 <body lang=EN-US link=blue vlink=purple>
-  <h1>Bootloader Example Using the CAN Physical Layer</h1>
+  <h1>Bootloader Example Using the CAN Physical Layer and TA100 ECDSA Verify</h1>
 
   <h2>Introduction</h2>
   This example shows how to use the pre-configured CAN demo on the dsPIC33CK256MP508 processor module for the Explorer
-  16/32 board.
+  16/32 board with TA100 ECDSA signature verification to bootload an application via CAN.
   This demo uses the ISO 15765-2 CAN Transport Protocol layer to transport custom bootloader commands over the CAN bus
   as seen in the diagram below:<br>
   <img src="readme_files/stack.png"><br>
@@ -29,6 +29,7 @@
 
   <h3>Software</h3>
   <ol>
+    <li><b>THIS PROJECT REQUIRES A NON PUBLIC COPY OF THE CRYPTOGRAPHIC AUTHENTICATION LIBRARY(CAL) FOR TA100 SUPPORT! CONTACT MICROCHIP TO OBTAIN A COPY.</b></li>
     <li>The unzipped example project files, boot.X and app.X</li>
     <li><a href="https://www.microchip.com/mplabx">Microchip MPLAB® X version 5.40 or later</a></li>
     <li><a href="https://www.microchip.com/en-us/development-tools-tools-and-software/mplab-xc-compilers">Microchip MPLAB® XC16 C compiler version 1.60 or later</a></li>
@@ -50,7 +51,9 @@
     <li>An MCP2542 click board (https://www.mikroe.com/mcp2542-click) or another appropriate CAN-FD transceiver click
       board.
       It is important that this is just a transceiver and not a CAN-to-SPI/UART converter chip.</li>
-    <li>A micro USB cable, a USB-Type C cable, or a 9v power adapter for the Explorer 16/32 (for powering the board).
+    <li>A micro USB cable, a USB-Type C cable, or a 9v power adapter for the Explorer 16/32 (for powering the board).</li>
+	<li><a href="https://www.microchip.com/wwwproducts/en/ta100">TA100 Trust Anchor external HSM 14-pin SOIC</a></li>
+	<li><a href="https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/AC164166">TA100 14-Pin SOIC CryptoAutomotive™ Socket Board</a></li>
     </li>
   </ol>
 
@@ -63,7 +66,8 @@
       <li>Connect the dsPIC33CK256MP508 processor module into the socket on the Explorer 16/32 such that the notched
         edge is
         in the top left corner matching the silk screen on the Explorer 16/32</li>
-      <li>Connect the MCP2542 daughter board into the mikroBUS™ A slot.</li>
+	  <li>Connect the TA100 14-Pin SOIC CryptoAutomotive™ Socket board into the mikroBUS™ A slot.</li>
+      <li>Connect the MCP2542 daughter board into the mikroBUS™ B slot.</li>
     </ol>
     <li>Connect the programmer to the Explorer 16/32</li>
     <li>Connect the Peak analyzer/generator to your computer.</li>
@@ -75,6 +79,8 @@
   <h3>Programming the Bootloader</h3>
   <ol>
     <li>Open the boot.x project in MPLAB® X</li>
+	<li>Copy and paste the TA100 support Cryptographic Authentication Llibrary(CAL) into the mcc_generated_files folder replacing all placeholder files within.</li>
+	<img src="readme_files/cal_replace.png"><br><br>
     <li>Press the “Make and Program” button on the top bar.</li>
     <img src="readme_files/program.png"><br><br>
     <li>Select the appropriate programmer if prompted.</li>
@@ -87,8 +93,7 @@
     <li>Open the app.X project in MPLAB® X
     <li>Press the “Clean and Build Project” button on the top bar.
       <b>NOTE</b>: Make sure not to hit the program button. This will program the application code over the bootloader
-      that was
-      just programmed.
+      that was just programmed.</li>
       <img src="readme_files/compile.png"><br><br>
 
     <li>The project should compile cleanly. app.X/dist/default/production/app.X.production.hex should be generated.
@@ -138,153 +143,14 @@
       </li>
     </ol>
     <img src="readme_files/open.png"><br><br>
-    <li>Press “Program Device”. The application should program erase, program and read back verify correctly.</li>
+	<li>Check the "Enable Self Verification After Program" checkbox</li>
+	<img src="readme_files/enable_self_verify.png"><br><br>
+    <li>Press “Program Device”. The application should program erase, program and perform a self verify using the TA100 for an ECDSA verify then read back verify correctly.</li>
     <ol type="a">
       <li>After a few seconds, D3 should be blinking.</li>
+	  <img src="readme_files/self_verify_ta100.png"><br><br>
     </ol>
   </ol>
-
-  <h2>Customizing the Bootloader Project</h2>
-  The bootloader project can be opened in MCC and new modules can be added and configured as they normally would in MCC.
-  Additionally, the parameters in the Bootloader:Bootloader module can be re-configured.
-
-  <h3>Changing the CAN-FD bitrates</h3>
-  The bitrates of the bootloader can be easily changed. By default the bitrate is set to 500 kbits/second. To change
-  the bitrate, do the following:
-  <ol>
-    <li>Open the bootloader project.</li>
-    <li>Open the MCC plug-in by clicking on the MCC icon in the tool bar of MPLAB X.</li>
-    <img src="readme_files/mcc.png"><br><br>
-    <li>Select the CAN-FD1 module from the project resources pane on the left navigation pane. This will open the CAN-FD1
-      module settings in the main configuration window.</li>
-    <img src="readme_files/can_fd1.png"><br><br>
-    <li>Expand the "Step 2: Bit Rate Settings" pane and make the desired bit rate changes.</li>
-    <img src="readme_files/bitrate.png"><br><br>
-    <li>Re-generate the project by pressing the generate button in the project resources pane.</li>
-    <img src="readme_files/generate.png"><br><br>
-    <li>Re-build/program the bootloader into the board.</li>
-    <img src="readme_files/program.png"><br><br>
-    <li>Re-open the settings window in the UBHA program.</li>
-    <img src="readme_files/settings.png"><br><br>
-    <li>Change the nominal or FD bit rates to match what were selected in MCC. <b>NOTE:</b> The Peak analyzer/generator is
-      limited to what bit rates it can generate so not all bit rates possible by the micro-controller can be realized by
-      this hardware generator. You are limited to the bit rates listed in the UBHA selection window.</li>
-    <ol type="a">
-      <li>When the bit rate has been changed, press apply.</li>
-    </ol>
-    <img src="readme_files/settings_can.jpg"><br><br>
-    <li>You can now press the program button or read device settings button as before and the device should now be
-      communicating using the new bit rate selected.</li>
-  </ol>
-
-  <h3>Changing the Host to Device ID</h3>
-  This is changing the message ID of the messages sent from the PC bootloader host to the target board.  Currently the same message ID must be used for both ISO 15765-2 message and flow control frames. To change the message ID used from host to device, do the following:
-  <ol>
-    <li>Open the bootloader project.</li>
-    <li>Open the MCC plug-in by clicking on the MCC icon in the tool bar of MPLAB X.</li>
-    <img src="readme_files/mcc.png"><br><br>
-    <li>Select the CAN1 module from the project resources pane on the left navigation pane. This will open the CAN1
-      module settings in the main configuration window.</li>
-    <img src="readme_files/can_fd1.png"><br><br>
-    <li>Expand the "Step 5: Filter Object Settings" pane.</li>
-    <img src="readme_files/filter.png"><br><br>
-    <li>Change the message ID in the Message ID section to the desired value.  In this example we changed it from 0xA1 to 0xA5.</li>
-    <img src="readme_files/filter_a5.png"><br><br>
-    <li>Re-generate the project by pressing the generate button in the project resources pane.</li>
-    <img src="readme_files/generate.png"><br><br>
-    <li>Re-build/program the bootloader into the board.</li>
-    <img src="readme_files/program.png"><br><br>
-    <li>Re-open the settings window in the UBHA program.</li>
-    <img src="readme_files/settings.png"><br><br>
-    <li>Change the "Host to Device ID" field to match the value used in the MCC filter object settings, in this example 0xA5.</li>
-    <img src="readme_files/host_to_device_a5.png"><br><br>
-    <ol type="a">
-      <li>When the message ID has been changed, press apply.</li>
-    </ol>
-    <li>You can now press the program button or read device settings button as before and the device should now be
-      communicating using the new message IDs from the host to the device.</li>
-  </ol>
-
-  <h3>Changing the Device To Host ID</h3>
-  This is changing the message ID of the messages sent from the the target board back to the PC host.  Currently the same message ID must be used for both ISO 15765-2 message and flow control frames. To change the message ID used from device to host, do the following:
-  <ol>
-    <li>Open the bootloader project.</li>
-    <li>Open the can_tp_config.h file in the "Headers/MCC Generated Files" section of the MPLAB X project.</li>
-    <img src="readme_files/config_header.png"><br><br>
-    <li>Change the values for the CAN_TP_MESSAGE_ID_DATA and CAN_TP_MESSAGE_ID_FLOW_CONTROL to the desired value.  In this example it is changed from 0xA2 to 0xA4.<br><b>NOTE:</b> Due to a constraint in the UBHA hos program, the same message ID must be used for both the data and flow control messages.  Please make these two values the same.</li>
-    <img src="readme_files/config_header_a4.png"><br><br>
-    <li>Re-build/program the bootloader into the board.</li>
-    <img src="readme_files/program.png"><br><br>
-    <li>Re-open the settings window in the UBHA program.</li>
-    <img src="readme_files/settings.png"><br><br>
-    <li>Change the "Device To Host ID" field to match the value used in can_tp_config.h file, in this example 0xA4.</li>
-    <img src="readme_files/device_to_host_a4.png"><br><br>
-    <ol type="a">
-      <li>When the message ID has been changed, press apply.</li>
-    </ol>
-    <li>You can now press the program button or read device settings button as before and the device should now be
-      communicating using the new message IDs from the device to the host.</li>
-  </ol>
-
-  <h3>Using Extended (29-bit) CAN IDs</h3>
-  The ISO 15765-2 specification says that the communication pair should use the same format IDs when talking to each other.  Thus we need to change settings in both the host application and the firmware to add support for extended IDs.
-  <ol>
-    <li>Open the bootloader project.</li>
-    <li>Open the can_tp_config.h file in the "Headers/MCC Generated Files" section of the MPLAB X project.</li>
-    <img src="readme_files/config_header.png"><br><br>
-    <li>Change the value CAN_TP_MESSAGE_ID_IS_EXTENDED from false to true.  If this definition doesn't exist, define it and set the value to true.  This will change all the messages from the device to the host to extended ID messages.
-    <img src="readme_files/extended_device_to_host.png"><br><br>
-    <li>Open the MCC plug-in by clicking on the MCC icon in the tool bar of MPLAB X.</li>
-    <img src="readme_files/mcc.png"><br><br>
-    <li>Select the CAN-FD1 module from the project resources pane on the left navigation pane. This will open the CAN-FD1
-      module settings in the main configuration window.</li>
-    <img src="readme_files/can_fd1.png"><br><br>
-    <li>Expand the "Step 5: Filter Object Settings" pane.</li>
-    <img src="readme_files/filter.png"><br><br>
-    <li>Modify the filter from "0xA1" to "0xA1x".  The trailing "x" indicates that this is an extended address.</li>
-    <img src="readme_files/extended_filter.png"><br><br>
-    <li>Re-generate the project by pressing the generate button in the project resources pane.</li>
-    <img src="readme_files/generate.png"><br><br>
-    <li>Re-build/program the bootloader into the board.</li>
-    <img src="readme_files/program.png"><br><br>
-    <li>Re-open the settings window in the UBHA program.</li>
-    <img src="readme_files/settings.png"><br><br>
-    <li>Change the "Message Format" field to extended (29-bit) mode.</li>
-    <img src="readme_files/can_settings_extended.png"><br><br>
-    <ol type="a">
-      <li>When the mode had been changed, press apply.</li>
-    </ol>
-    <li>You can now press the program button or read device settings button as before and the device should now be
-      communicating using the new message IDs from the device to the host.</li>
-  </ol>
-
-  <h3>Reducing Transmission Data Size (Device to Host)</h3>
-  By default, the demo is configured to use 64 byte transmissions from the device to the host.  If it is desired to reduce this transmission size, follow the below procedure:
-  <ol>
-    <li>Open the bootloader project.</li>
-    <li>Open the can_tp_config.h file in the "Headers/MCC Generated Files" section of the MPLAB X project.</li>
-    <img src="readme_files/config_header.png"><br><br>
-    <li>Change the value CAN_TP_TRANSMISSION_DATA_LENGTH_MAX to the desired size.  The allowed values are 8, 12, 16, 20, 24, 32, 48, or 64.
-    <img src="readme_files/smaller_transmit_device_to_host.png"><br><br>
-    <li>Re-build/program the bootloader into the board.</li>
-    <img src="readme_files/program.png"><br><br>
-    <li>You can now press the program button or read device settings button on the UBHA program as before and the device should now be
-      communicating using the new transmission size from the device to the host.</li>
-  </ol>
-
-  <h3>Reducing Transmission Data Size (Host to Device)</h3>
-  By default, the demo is configured to use 64 byte transmissions from the host to device.  If it is desired to reduce this transmission size, follow the below procedure:
-  <ol>
-    <li>In the UBHA application, open the CAN settings window.</li>
-    <img src="readme_files/settings.png"><br><br>
-    <li>Change the value of the "FD TX Data Length" field to the desired transmission size from the host to the device.</li>
-    <img src="readme_files/settings_can_fd_txdl.png"><br><br>
-    <li>You can now press the program button or read device settings button on the UBHA program as before and the device should now be
-      communicating using the new transmission size from the device to the host.</li>
-  </ol>
-
-  <h2>Customizing the Application Project</h2>
-  The application MCC configuration can be opened and modules can be added or modified as desired.
 
 <h2>Known Limitations</h2>
 <ul>
