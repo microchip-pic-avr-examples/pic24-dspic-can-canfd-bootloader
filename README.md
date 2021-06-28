@@ -26,5 +26,5 @@ The hardware and software setup is different for each of these use cases.  There
 
 [dspic33ep-can2.0b](/dspic33ep-can2.0b "dsPIC33EP512MU810 CAN based bootloader example project")
 
-[dspic33ck-canfd-ta100](/dspic33ck-fd-ta100 "dsPIC33CK256MP508 CAN-FD based bootloader example project w TA100 Verify")
+[dspic33ck-canfd-ta100](/dspic33ck-canfd-ta100 "dsPIC33CK256MP508 CAN-FD based bootloader example project w TA100 Verify")
 
