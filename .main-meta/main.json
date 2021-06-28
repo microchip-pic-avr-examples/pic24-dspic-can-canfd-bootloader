@@ -1,8 +1,8 @@
 {
-   "metaDataVersion":"1.0.1",
+   "metaDataVersion":"1.1.0",
    "category":"com.microchip.ide.project",
    "content":{
-      "metaDataVersion":"1.0.1",
+      "metaDataVersion":"1.1.0",
       "name":"com.microchip.mplabx.project.pic24-dspic-can-canfd-bootloader",
       "version":"1.0.1",
       "displayName":"PIC24/dsPIC CAN/CAN-FD Bootloader",
@@ -25,10 +25,10 @@
          "semverRange": ">=4.0.1"
       },
       "device":{
-         "metaDataVersion":"1.0.1",
+         "metaDataVersion":"1.1.0",
          "category":"com.microchip.portal.contentRef",
          "content":{
-            "metaDataVersion":"1.0.1",
+            "metaDataVersion":"1.1.0",
             "category":"com.microchip.device",
             "name":"dsPIC33CK256MP508",
             "versionRange":"*"
