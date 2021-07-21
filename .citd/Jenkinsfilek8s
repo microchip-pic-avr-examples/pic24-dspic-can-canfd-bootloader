@@ -192,23 +192,6 @@ pipeline {
                 }
             }
         }
-        
-        //Deploying the Github content to portal
-        stage('Portal-Deploy') {
-            when {
-                allOf {
-                    not { changeRequest() }
-                    anyOf {branch 'master';}
-                }
-            }
-            steps {
-                script {
-                    portalDeploy(
-                        githubOrgName: "${env.GITHUB_PRODUCTION_ORGANIZATION}"
-                    )
-                }
-            }
-        }
   }
 
     post {
