@@ -36,12 +36,13 @@
       },
       "peripherals":[
          "CAN",
-		 "CAN FD"
       ],
       "keywords":[
          "CAN",
          "Bootloader",
-		 "CAN-FD"
+         "CAN-FD",
+         "TA100",
+         "Secure Boot"
       ]
    }
 }
