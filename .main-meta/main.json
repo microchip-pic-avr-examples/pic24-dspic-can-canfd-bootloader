@@ -35,13 +35,11 @@
          }
       },
       "peripherals":[
-         "CAN",
-		 "CAN FD"
       ],
       "keywords":[
          "CAN",
          "Bootloader",
-		 "CAN-FD"
+         "CAN-FD"
       ]
    }
 }
