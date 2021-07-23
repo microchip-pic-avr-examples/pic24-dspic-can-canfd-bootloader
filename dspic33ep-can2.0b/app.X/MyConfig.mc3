@@ -9,12 +9,12 @@
          <string>class com.microchip.mcc.mcu16.mainManager.MainManager</string>
       </entry>
       <entry>
-         <string>WATCHDOG</string>
-         <string>class com.microchip.mcc.mcu16.systemManager.wdt.Wdt</string>
-      </entry>
-      <entry>
          <string>Pin Module</string>
          <string>class com.microchip.mcc.mcu16.pinManager.PinManager</string>
+      </entry>
+      <entry>
+         <string>WATCHDOG</string>
+         <string>class com.microchip.mcc.mcu16.systemManager.wdt.Wdt</string>
       </entry>
       <entry>
          <string>ICD</string>
@@ -54,10 +54,10 @@
       </entry>
    </usedClasses>
    <usedLibraries class="java.util.ArrayList">
+      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.mcu16.Mcu16PeripheralLibrary" version="1.170.0"/>
+      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.bootloader16.mcc.Library" version="1.18.4"/>
       <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.boardsupportlibrary.BoardSuppportLibrary" version="1.12.0"/>
       <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.foundationservices.library.FoundationServicesLibrary" version="0.2.2"/>
-      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.mcu16.Mcu16PeripheralLibrary" version="1.170.0"/>
-      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.bootloader16.mcc.Library" version="1.18.5-SNAPSHOT"/>
    </usedLibraries>
    <tokenMap class="java.util.HashMap">
       <entry>
@@ -11944,11 +11944,11 @@
       </entry>
       <entry>
          <file>mcc_generated_files\boot\remapped_reset.S</file>
-         <hash>8e4d001fdd1e414410cfab338ca9583d03b3178c4a2d6c782fb006c41579cc9d</hash>
+         <hash>0397c44b19582e045ae2e1f5a4bdf5783efa978ec05e82332192772be9e6c15c</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\boot\hardware_interrupt_table.S</file>
-         <hash>a42df5b4a1189c7d6b4de77ef5608598c71f46bd66df3df46e69ea51cefbff1a</hash>
+         <hash>600fc49b27ec672a46f4a5c88b4f0e9d50a1c0e32b34ff6c26a378af7d81e2b2</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\system_types.h</file>
@@ -11963,24 +11963,24 @@
          <hash>4a6b8bbd5d2fbe5f20e79db8d915e50e2cd43920940679b40db90f3789cbccd5</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\delay.h</file>
-         <hash>dda77102dba9adc0f9aef1c8c542cfee6d6cccc96446f4cd1bf07be2150a4d95</hash>
+         <file>mcc_generated_files\system.c</file>
+         <hash>14953608375a7688de8364e996e733c253eb95fccc7e874895fabd9fc828c930</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\system.c</file>
-         <hash>d483ad28aefecdfea61baabffa8060d387db1ee3320c2a795ff11dea2cf3039f</hash>
+         <file>mcc_generated_files\delay.h</file>
+         <hash>dda77102dba9adc0f9aef1c8c542cfee6d6cccc96446f4cd1bf07be2150a4d95</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\clock.h</file>
          <hash>293a93026b24e1cd913bc7cdc68cc92ca6e7f3b7aeca057319a85d7d4d1779f9</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\docs\delay.dox</file>
-         <hash>13d4874d789b563dd4499efacd71882cbc38f8459da91ac17f13fa76079be93b</hash>
+         <file>mcc_generated_files\boot\user_interrupt_table.S</file>
+         <hash>8c94e6b47f4e564f76e70c30afaa9d7ae1656713f25cf7e4414261c41d1924e6</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\boot\user_interrupt_table.S</file>
-         <hash>5831d6d169f1dc6ae9cc41119bf358fa812d5ea6740025b1f59a8daed1c18d3d</hash>
+         <file>mcc_generated_files\docs\delay.dox</file>
+         <hash>13d4874d789b563dd4499efacd71882cbc38f8459da91ac17f13fa76079be93b</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\mcc.c</file>
@@ -11988,7 +11988,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\boot\interrupts.S</file>
-         <hash>558e78c583bdb4ed42b5808cd909075f3f974ca57011c0018f2a4c51580928af</hash>
+         <hash>74127f7ddba3ef9d062aa0f782e5a770424c81a8a51a065c975cc4984523cae0</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\reset.h</file>
@@ -11996,7 +11996,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\mcc.h</file>
-         <hash>3d699f2f2f0db4d95130fca41e71de68d1155a6180ef09b58da38c2328092278</hash>
+         <hash>f1024c960dad3faf6949739133894e0177cec74b1aaf7957cc37cbf72da6ce02</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\reset.c</file>
@@ -12024,7 +12024,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\boot\boot_config.h</file>
-         <hash>e04450177fd5b419f3c98f227f9b919ead70f90343dc568d474ccb912ae6639b</hash>
+         <hash>2e743598f68126e5d0d261de294ab2953632709b2ce6b9110308b93eb352f434</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\traps.c</file>
@@ -12036,15 +12036,15 @@
       </entry>
       <entry>
          <file>mcc_generated_files\boot\memory_partition.S</file>
-         <hash>ba92117151414767d05dbadda4c0cca5c99df3c86077ef7727c892cebf6845cc</hash>
-      </entry>
-      <entry>
-         <file>mcc_generated_files\interrupt_manager.c</file>
-         <hash>7579f7e24f3a56fe5b2aea4b12b20b2fd92028db34dea265972f84bb552d527a</hash>
+         <hash>5be2122188c884ba5aaffea13584d3795d68bd72187f39e410a124d2b444828a</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\boot\combineAppAndBootloaderHex.bat</file>
          <hash>ce12f8e9414f857a62606bc2c16f27dd57de60c30e00d80f4c0e18c5b7e2fb8e</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\interrupt_manager.c</file>
+         <hash>7579f7e24f3a56fe5b2aea4b12b20b2fd92028db34dea265972f84bb552d527a</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\watchdog.h</file>

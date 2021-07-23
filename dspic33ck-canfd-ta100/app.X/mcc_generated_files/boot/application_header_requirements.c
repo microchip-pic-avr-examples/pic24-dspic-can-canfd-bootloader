@@ -5,15 +5,15 @@
     Microchip Technology Inc.
 
   @File Name: 
-    certificate_checksum16.S
+    application_header_requirements.c
 
   @Summary:
-    This is the certificate_checksum16.S file generated using 16-bit Bootloader
+    This is the application_header_requirements.c file generated using 16-bit Bootloader
 
   @Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  16-bit Bootloader - 1.18.4-SNAPSHOT
+        Product Revision  :  16-bit Bootloader - 1.18.4
         Device            :  dsPIC33CK256MP508
     The generated drivers are tested against the following:
         Compiler          :  XC16 v1.36B
@@ -53,34 +53,9 @@ Copyright (c) [2012-2019] Microchip Technology Inc.
     such restrictions will not apply to such third party software.
 */
 
-/* This file puts a certificate at the start of the application image that the
- * bootloader will use to verify the integrity of the application image.
- */
+#include <xc.h>
 
-#include "boot_config.h"
-
-//#error "A script to append verification checksum has been added to your project. You must add a call to it as a post-build step in your project properties. Delete this warning after you have done so."  
-/*
-* Steps to append verification checksum to the project hex file:  
-* 1. Right click on your project, and click 'Properties'.
-* 2. Select the 'Building' left navigation node.
-* 3. Check the box next to 'Execute this line after the build'.
-* 4. In the text field below, 
-*    add "cd mcc_generated_files/boot && postBuild.bat $(MP_CC_DIR)" (without quotes) if you are on a Windows machine, 
-*    or "cd mcc_generated_files/boot && ./postBuild.sh $(MP_CC_DIR)" (without quotes) if you are on a Linux/Unix/Mac machine.  
-* 5. Delete or comment out the #error message above
-*/
-
-    .section .certificate_checksum16, code, address(BOOT_CONFIG_APPLICATION_IMAGE_CERTIFICATE_ADDRESS), keep
-    
-    /* Skip the instruction that holds the Checksum - this will have to be injected
-     * by a tool later, but we need to reserve the space for it. 
-     */
-    .skip(2) 	
-	
-    /* Address where to start the checksum */
-    .long(0x3000)
-	
-    /* Address where to end the checksum */
-    .long(0x2B7FE)
+#if (__XC16_VERSION__ < 1060)
+#error "The scripts generated to sign, or help sign, the application image require MPLAB XC16 version 1.60 or later.  Install MPLAB XC16 version 1.60 and add it to the system path."
+#endif
 

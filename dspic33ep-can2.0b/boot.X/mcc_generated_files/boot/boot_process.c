@@ -15,7 +15,7 @@
   @Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  16-bit Bootloader - 1.18.5-SNAPSHOT
+        Product Revision  :  16-bit Bootloader - 1.18.4
         Device            :  dsPIC33EP512MU810
     The generated drivers are tested against the following:
         Compiler          :  XC16 v1.36B
@@ -66,7 +66,7 @@ Copyright (c) [2012-2019] Microchip Technology Inc.
 #include "boot_config.h"
 
 #ifndef FLASH_ERASE_PAGE_MASK 
-#define FLASH_ERASE_PAGE_MASK  (~((FLASH_ERASE_PAGE_SIZE_IN_INSTRUCTIONS*2u) - 1u)) 
+#define FLASH_ERASE_PAGE_MASK  (~((FLASH_ERASE_PAGE_SIZE_IN_INSTRUCTIONS*2) - 1)) 
 #endif
 
 
@@ -128,7 +128,7 @@ enum BOOT_COMMAND_RESULT BOOT_ProcessCommand(void)
     uint8_t command;
     uint16_t command_length;
 
-    if (bytes_ready == 0u) 
+    if (bytes_ready == 0) 
     { 
         return BOOT_COMMAND_NONE; 
     }
@@ -140,7 +140,7 @@ enum BOOT_COMMAND_RESULT BOOT_ProcessCommand(void)
     command = BOOT_COM_Peek(0);
 
     // validate the length of the command will not exceed the buffer size
-    command_length = BOOT_COM_Peek(1u) + BOOT_COM_Peek(2u)*256u + sizeof(struct CMD_STRUCT_0);
+    command_length = BOOT_COM_Peek(1) + BOOT_COM_Peek(2)*256 + sizeof(struct CMD_STRUCT_0);
     if ( ( command_length > BOOT_CONFIG_MAX_PACKET_SIZE ) && ( command != ERASE_FLASH ) )
     {
         return CommandError(BAD_LENGTH);
@@ -216,9 +216,9 @@ static enum BOOT_COMMAND_RESULT ReadVersion(void)
         .version = BOOT_CONFIG_VERSION,
         .maxPacketLength = BOOT_CONFIG_MAX_PACKET_SIZE,
         .unused1 = 0,
-        .deviceId = 0x3456u,
+        .deviceId = 0x3456,
         .unused2 = 0,
-        .eraseSize = FLASH_ERASE_PAGE_SIZE_IN_INSTRUCTIONS * 2u,
+        .eraseSize = FLASH_ERASE_PAGE_SIZE_IN_INSTRUCTIONS * 2,
         .writeSize = MINIMUM_WRITE_BLOCK_SIZE,
         .unused3 = 0,
         .userRsvdStartSddress = 0,
@@ -262,7 +262,7 @@ static bool IsLegalAddress(uint32_t addressToCheck)
 
 static bool IsLegalRange(uint32_t startRangeToCheck, uint32_t endRangeToCheck)
 {
-    return ( IsLegalAddress(startRangeToCheck) && IsLegalAddress(endRangeToCheck - 2u) );
+    return ( IsLegalAddress(startRangeToCheck) && IsLegalAddress(endRangeToCheck-2) );
 }
 
 static enum BOOT_COMMAND_RESULT EraseFlash(void)
@@ -333,11 +333,10 @@ static enum BOOT_COMMAND_RESULT WriteFlash(void)
     
 
     uint32_t flashAddress;   
-    uint16_t dataLength;
-    uint16_t count;
+    uint16_t dataLength, count;
     
-    dataLength = BOOT_COM_Peek(2u)<<8u;
-    dataLength |= BOOT_COM_Peek(1u);
+    dataLength = BOOT_COM_Peek(2)<<8;
+    dataLength |= BOOT_COM_Peek(1);
     
     if (BOOT_COM_GetBytesReady() < (sizeof(struct CMD_STRUCT_0) + dataLength))
     { 
@@ -352,8 +351,8 @@ static enum BOOT_COMMAND_RESULT WriteFlash(void)
 
     flashAddress = pCommand->address;
 
-    if ( IsLegalRange(flashAddress, flashAddress + (dataLength/2u) ) &&
-            ((dataLength % MINIMUM_WRITE_BLOCK_SIZE) == 0u) && 
+    if ( IsLegalRange(flashAddress, flashAddress+dataLength/2) &&
+            ((dataLength % MINIMUM_WRITE_BLOCK_SIZE) == 0) && 
             (dataLength <= (BOOT_CONFIG_MAX_PACKET_SIZE - sizeof(struct CMD_STRUCT_0))) )
     {
         FLASH_Unlock(pCommand->unlockSequence);
@@ -364,7 +363,7 @@ static enum BOOT_COMMAND_RESULT WriteFlash(void)
 
             memcpy(&flashData[0], &pCommand->data[count], MINIMUM_WRITE_BLOCK_SIZE);
 
-            if (FLASH_WriteDoubleWord24(pCommand->address + (count/2u), flashData[0],flashData[1] ) == false)
+            if (FLASH_WriteDoubleWord24(pCommand->address+count/2, flashData[0],flashData[1] ) == false)
             {
                 response.success = BAD_ADDRESS;
                 break;
@@ -401,15 +400,15 @@ static enum BOOT_COMMAND_RESULT ReadFlash(void)
 
     memcpy(&response, commandArray, sizeof(struct CMD_STRUCT_0));
 
-    if (IsLegalRange(pCommand->address, pCommand->address + (pCommand->dataLength/2u) ) &&
-            (pCommand->dataLength <= (BOOT_CONFIG_MAX_PACKET_SIZE - sizeof(struct CMD_STRUCT_0) - 1u )) && 
-            ( (pCommand->dataLength % 4u) == 0u) )
+    if (IsLegalRange(pCommand->address, pCommand->address+pCommand->dataLength/2) &&
+            (pCommand->dataLength <= (BOOT_CONFIG_MAX_PACKET_SIZE - sizeof(struct CMD_STRUCT_0) - 1 )) && 
+            ((pCommand->dataLength%4)==0) )
     {
         
-        for (count = 0u; count < pCommand->dataLength; count += 4u)
+        for (count = 0; count < pCommand->dataLength; count += 4)
         {
-            flashData = FLASH_ReadWord24(pCommand->address + (count/2u));
-            memcpy(&response.data[count], &flashData, 4u);
+            flashData = FLASH_ReadWord24(pCommand->address+count/2);
+            memcpy(&response.data[count], &flashData, 4);
         }
 
         response.success = COMMAND_SUCCESS;
@@ -417,7 +416,7 @@ static enum BOOT_COMMAND_RESULT ReadFlash(void)
     else
     {
         response.success = BAD_ADDRESS;
-        response.dataLength = 0u;        
+        response.dataLength = 0;        
     }
     
     BOOT_COM_Write((uint8_t*) & response, (sizeof (struct RESPONSE_TYPE_0) / sizeof (uint8_t)) + response.dataLength  );
@@ -443,14 +442,14 @@ static enum BOOT_COMMAND_RESULT CalculateChecksum(void)
 
     memcpy(&response, commandArray, sizeof(struct CMD_STRUCT_0));
     
-    if ( IsLegalRange(pCommand->address, pCommand->address+pCommand->dataLength - 1u))
+    if ( IsLegalRange(pCommand->address, pCommand->address+pCommand->dataLength-1))
     {
-        for (count = 0; count < pCommand->dataLength; count += 4u)
+        for (count = 0; count < pCommand->dataLength; count += 4)
         {
-            flashData = FLASH_ReadWord24(pCommand->address + (count/2u));
-            checksum += (flashData & 0xFFFFu) + ((flashData>>16u) & 0xFFu);;
+            flashData = FLASH_ReadWord24(pCommand->address+count/2);
+            checksum += (flashData & 0xFFFF) + ((flashData>>16) & 0xFF);;
         }
-        response.data = (checksum & 0xFFFFu);
+        response.data = (checksum & 0xFFFF);
 
         response.success = COMMAND_SUCCESS;
         BOOT_COM_Write((uint8_t*) & response, (sizeof (struct RESPONSE_TYPE_0_2_PAYLOAD) / sizeof (uint8_t)) );  

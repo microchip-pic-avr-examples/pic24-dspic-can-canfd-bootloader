@@ -17,24 +17,24 @@
          <string>class com.microchip.mcc.softwareabstraction.modules.can.CAN</string>
       </entry>
       <entry>
-         <string>Pin Module</string>
-         <string>class com.microchip.mcc.mcu16.pinManager.PinManager</string>
-      </entry>
-      <entry>
          <string>WATCHDOG</string>
          <string>class com.microchip.mcc.mcu16.systemManager.wdt.Wdt</string>
+      </entry>
+      <entry>
+         <string>Pin Module</string>
+         <string>class com.microchip.mcc.mcu16.pinManager.PinManager</string>
       </entry>
       <entry>
          <string>DMT</string>
          <string>class com.microchip.mcc.mcu16.systemManager.dmt.DMT</string>
       </entry>
       <entry>
-         <string>RESET</string>
-         <string>class com.microchip.mcc.mcu16.systemManager.reset.RESET</string>
-      </entry>
-      <entry>
          <string>ICD</string>
          <string>class com.microchip.mcc.mcu16.systemManager.icd.Icd</string>
+      </entry>
+      <entry>
+         <string>RESET</string>
+         <string>class com.microchip.mcc.mcu16.systemManager.reset.RESET</string>
       </entry>
       <entry>
          <string>Interrupt Module</string>
@@ -74,10 +74,10 @@
       </entry>
    </usedClasses>
    <usedLibraries class="java.util.ArrayList">
-      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.mcu16.Mcu16PeripheralLibrary" version="1.169.2"/>
-      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.bootloader16.mcc.Library" version="1.18.4-SNAPSHOT"/>
       <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.boardsupportlibrary.BoardSuppportLibrary" version="1.12.0"/>
+      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.mcu16.Mcu16PeripheralLibrary" version="1.169.2"/>
       <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.foundationservices.library.FoundationServicesLibrary" version="0.2.2"/>
+      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.bootloader16.mcc.Library" version="1.18.4"/>
    </usedLibraries>
    <tokenMap class="java.util.HashMap">
       <entry>
@@ -177,12 +177,12 @@
          <value>1</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="Requested Clock Available"/>
-         <value>enabled</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOCON2H" settingAlias="FSIZE" alias="1"/>
          <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="Requested Clock Available"/>
+         <value>enabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="TRISD" settingAlias="TRISD6" alias="output"/>
@@ -5873,12 +5873,12 @@
          <value>disabled</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO9 Enable"/>
-         <value>disabled</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOCON3H" settingAlias="FSIZE" alias="8"/>
          <value>7</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO9 Enable"/>
+         <value>disabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="RESET" registerAlias="RCON" settingAlias="IOPUWR"/>
@@ -5997,12 +5997,12 @@
          <value>1 Stop bit sent, 1 checked at RX</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO19 Enable"/>
-         <value>disabled</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CTBCH" settingAlias="TBC19" alias="disabled"/>
          <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO19 Enable"/>
+         <value>disabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="CNEN0D" settingAlias="CNIE0D8" alias="disabled"/>
@@ -7493,12 +7493,12 @@
          <value>input</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="Filter0 Filter SID "/>
-         <value>161</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOCON4L" settingAlias="RTREN" alias="enabled"/>
          <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="Filter0 Filter SID "/>
+         <value>161</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="INTERNAL OSCILLATOR" name="REFCLKOUT_TRIM"/>
@@ -8769,12 +8769,12 @@
          <value>0</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="Fifo Count"/>
-         <value>2</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOUA2H" settingAlias="FIFOUA18" alias="disabled"/>
          <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="Fifo Count"/>
+         <value>2</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="INTERNAL OSCILLATOR" registerAlias="PMD7" settingAlias="PTGMD" alias="disabled"/>
@@ -8829,12 +8829,12 @@
          <value>ON_SW</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO1 Transmit Priority"/>
-         <value>0</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="CAN FD1 MODULE" registerAlias="CRXOVIFL" settingAlias="RFOVIF4"/>
          <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO1 Transmit Priority"/>
+         <value>0</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="ODCD" settingAlias="ODCD13" alias="disabled"/>
@@ -11453,12 +11453,12 @@
          <value>37</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR1" name="prescaleDivisor"/>
-         <value>64</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CINTH" settingAlias="CERRIE" alias="enabled"/>
          <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR1" name="prescaleDivisor"/>
+         <value>64</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="System Module" registerAlias="FOSCSEL" settingAlias="FNOSC" alias="LPRC"/>
@@ -14033,12 +14033,12 @@
          <value/>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO1 Custom Name"/>
-         <value>CAN1_TX_FIFO1</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOUA4L" settingAlias="FIFOUA9" alias="disabled"/>
          <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO1 Custom Name"/>
+         <value>CAN1_TX_FIFO1</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="Custom Name RC6"/>
@@ -15169,12 +15169,12 @@
          <value>1</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="Nominal SJW"/>
-         <value>32 TQ</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CBDIAG1H" settingAlias="ESI" alias="enabled"/>
          <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="Nominal SJW"/>
+         <value>32 TQ</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="RESET" registerAlias="RCON" settingAlias="CM" alias="enabled"/>
@@ -15409,12 +15409,12 @@
          <value>16</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="Fifo Total RAM Space"/>
-         <value>48 Bytes</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOCON5H" settingAlias="FSIZE" alias="10"/>
          <value>9</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="Fifo Total RAM Space"/>
+         <value>48 Bytes</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOCON5H" settingAlias="FSIZE" alias="11"/>
@@ -15781,12 +15781,12 @@
          <value>7</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO10 Enable"/>
-         <value>disabled</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CTXATIFH" settingAlias="TFATIF27" alias="disabled"/>
          <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO10 Enable"/>
+         <value>disabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="Pin Module" registerAlias="CNAI" settingAlias="enable"/>
@@ -16629,12 +16629,12 @@
          <value>20</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="TMR1" registerAlias="TCON"/>
-         <value>32800</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOCON5H" settingAlias="FSIZE" alias="22"/>
          <value>21</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="TMR1" registerAlias="TCON"/>
+         <value>32800</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="CNEN1D" settingAlias="CNIE1D0" alias="disabled"/>
@@ -16837,12 +16837,12 @@
          <value>0</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR1" registerAlias="TCON" settingAlias="TCKPS"/>
-         <value>1:64</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFLTOBJ5H" settingAlias="SID11" alias="disabled"/>
          <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR1" registerAlias="TCON" settingAlias="TCKPS"/>
+         <value>1:64</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="CNEN0B" settingAlias="CNIE0B4" alias="disabled"/>
@@ -16953,12 +16953,12 @@
          <value>0</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO27 Enable"/>
-         <value>disabled</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CTXQUAH" settingAlias="TXQUA19" alias="enabled"/>
          <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO27 Enable"/>
+         <value>disabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOUA6L" settingAlias="FIFOUA9"/>
@@ -17857,12 +17857,12 @@
          <value>0</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO0"/>
-         <value>TXQ</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CRXOVIFL" settingAlias="RFOVIF13" alias="enabled"/>
          <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO0"/>
+         <value>TXQ</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO1"/>
@@ -18873,12 +18873,12 @@
          <value>1</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="Nominal Time Segment2"/>
-         <value>32 TQ</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOUA3H" settingAlias="FIFOUA23"/>
          <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="Nominal Time Segment2"/>
+         <value>32 TQ</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="Custom Name RC12"/>
@@ -22105,12 +22105,12 @@
          <value>disabled</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR1" name="TMR1_TIISRFunction"/>
-         <value>ISR_TMR1_TI</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="CAN FD1 MODULE" registerAlias="CFLTOBJ15L"/>
          <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR1" name="TMR1_TIISRFunction"/>
+         <value>ISR_TMR1_TI</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOUA5H" settingAlias="FIFOUA17" alias="enabled"/>
@@ -22181,12 +22181,12 @@
          <value>0</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR1" registerAlias="PR" settingAlias="PR"/>
-         <value>1171</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CTEFUAL" settingAlias="TEFUA4" alias="disabled"/>
          <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR1" registerAlias="PR" settingAlias="PR"/>
+         <value>1171</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CTXATIFL" settingAlias="TFATIF11" alias="disabled"/>
@@ -22825,11 +22825,11 @@
          <value>enabled</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR1" registerAlias="TCON" settingAlias="TECS" alias="T1CK"/>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CTEFUAL" settingAlias="TEFUA8" alias="disabled"/>
          <value>0</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CTEFUAL" settingAlias="TEFUA8" alias="disabled"/>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR1" registerAlias="TCON" settingAlias="TECS" alias="T1CK"/>
          <value>0</value>
       </entry>
       <entry>
@@ -24269,12 +24269,12 @@
          <value>disabled</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR1" name="actualPeriod"/>
-         <value>0.0010001067</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOUA6L" settingAlias="FIFOUA15" alias="disabled"/>
          <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR1" name="actualPeriod"/>
+         <value>0.0010001067</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="Pin Module" registerAlias="RPINR17"/>
@@ -24449,12 +24449,12 @@
          <value>T1CK</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="Filter0 Filter EID "/>
-         <value>0</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOUA5H" settingAlias="FIFOUA24"/>
          <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="Filter0 Filter EID "/>
+         <value>0</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="CNEN0C" settingAlias="CNIE0C2" alias="disabled"/>
@@ -25145,12 +25145,12 @@
          <value>RXBKIF flag when Break makes low-to-high transition after being low for at least 23/11 bit periods</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="DELAY" name="usecaseComboSettings"/>
-         <value>None</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOUA7H" settingAlias="FIFOUA18" alias="enabled"/>
          <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="DELAY" name="usecaseComboSettings"/>
+         <value>None</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="CAN FD1 MODULE" registerAlias="CCONL" settingAlias="BUSY"/>
@@ -25777,16 +25777,16 @@
          <value>65535</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR1" registerAlias="TCON" settingAlias="TECS" alias="FOSC"/>
-         <value>2</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CTXQCONL" settingAlias="TXQEIE" alias="disabled"/>
          <value>0</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOCON4H" settingAlias="FSIZE" alias="31"/>
          <value>30</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR1" registerAlias="TCON" settingAlias="TECS" alias="FOSC"/>
+         <value>2</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOCON1H" settingAlias="TXAT" alias="Disabled"/>
@@ -26101,12 +26101,12 @@
          <value>1</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO7 Enable"/>
-         <value>disabled</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOSTA7" settingAlias="TFERFFIF" alias="disabled"/>
          <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO7 Enable"/>
+         <value>disabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="Pin Module" registerAlias="CNEN1D" settingAlias="CNIE1D3"/>
@@ -27453,11 +27453,11 @@
          <value>1</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR1" registerAlias="TCON" settingAlias="TON" alias="disabled"/>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOUA1L" settingAlias="FIFOUA5" alias="disabled"/>
          <value>0</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOUA1L" settingAlias="FIFOUA5" alias="disabled"/>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR1" registerAlias="TCON" settingAlias="TON" alias="disabled"/>
          <value>0</value>
       </entry>
       <entry>
@@ -28141,12 +28141,12 @@
          <value>disabled</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR1" registerAlias="TCON" settingAlias="TMWIP" alias="Write pending"/>
-         <value>1</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOUA1L" settingAlias="FIFOUA2" alias="disabled"/>
          <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR1" registerAlias="TCON" settingAlias="TMWIP" alias="Write pending"/>
+         <value>1</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="UART1" registerAlias="USTAH" settingAlias="URXISEL" alias="RX_THREE_WORDS"/>
@@ -28269,12 +28269,12 @@
          <value>input</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO2 Transmit Priority"/>
-         <value>NA</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOCON2H" settingAlias="FSIZE"/>
          <value>2</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="CAN FD1" name="FIFO2 Transmit Priority"/>
+         <value>NA</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CTBCL" settingAlias="TBC7" alias="disabled"/>
@@ -29853,12 +29853,12 @@
          <value>1</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR1" registerAlias="TCON" settingAlias="PRWIP"/>
-         <value>Write complete</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="CAN FD1 MODULE" registerAlias="CFIFOUA7H" settingAlias="FIFOUA23" alias="enabled"/>
          <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR1" registerAlias="TCON" settingAlias="PRWIP"/>
+         <value>Write complete</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="CNEN0E" settingAlias="CNIE0E6" alias="enabled"/>
@@ -31336,7 +31336,7 @@
    <generatedFileHashHistoryMap class="java.util.HashMap">
       <entry>
          <file>mcc_generated_files\boot\boot_demo.h</file>
-         <hash>d7206b45b49c1d8265e74533b582f04cd5199354e8e83651164c292c787c6d68</hash>
+         <hash>8802c533fdea11ac9acea38628bbba0d2488ee8aa9975f5cfb30248e5285fd28</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\interrupt_manager.h</file>
@@ -31344,15 +31344,15 @@
       </entry>
       <entry>
          <file>mcc_generated_files\boot\com_adaptor_uart.c</file>
-         <hash>3327ad75f01a1acbbf903e65f1fe2b175d1dc97eceeef64b6928a596efab675c</hash>
+         <hash>83c658c0e11a31a8b20c71e2d8ee245b6f5c55390da2f8296de02e141679f8fd</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\boot\boot_demo.c</file>
-         <hash>56024e4a47815431f8b82dadaeeb80031f1d41bac0862195204cf63c04596ac0</hash>
+         <hash>07c93d1a7e47faebd421d0211624451fdb84998670e7b83bfb9c8ebc5c59b851</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\boot\hardware_interrupt_table.S</file>
-         <hash>969255c04ed297d819e441f7f25a321e9e1e4be9d54d883c016870c7f0041e60</hash>
+         <hash>ebabd077cd993b12249747b0a47fa05c6668c5a1c93ca970af04df1b2c4423be</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\can1.h</file>
@@ -31368,27 +31368,27 @@
       </entry>
       <entry>
          <file>mcc_generated_files\boot\boot_process.c</file>
-         <hash>225c52054285460ebb38627703503197aa476c152f76dc28966723f5068682e5</hash>
-      </entry>
-      <entry>
-         <file>mcc_generated_files\delay.c</file>
-         <hash>4a6b8bbd5d2fbe5f20e79db8d915e50e2cd43920940679b40db90f3789cbccd5</hash>
+         <hash>610501a4e9799813b14601e0ee50e2c77025995aafcaff1e9367ba74c197cec3</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\can_module_features.h</file>
          <hash>79bc5de95982321c66ddce15ad7420d5aad2d9f5688b1db58a31e30568d5b2a1</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\system.c</file>
-         <hash>634662f6ccf7f2153535d61a8aada93ce1685acc74ffe99e6025924828f5ef24</hash>
+         <file>mcc_generated_files\delay.c</file>
+         <hash>4a6b8bbd5d2fbe5f20e79db8d915e50e2cd43920940679b40db90f3789cbccd5</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\delay.h</file>
          <hash>dda77102dba9adc0f9aef1c8c542cfee6d6cccc96446f4cd1bf07be2150a4d95</hash>
       </entry>
       <entry>
+         <file>mcc_generated_files\system.c</file>
+         <hash>8f678ba8acdd4d88d084cc28b3461378c6910bcd774bd21daee60ee19f27fb81</hash>
+      </entry>
+      <entry>
          <file>mcc_generated_files\boot\boot_process.h</file>
-         <hash>b1270a65ec942c6efd0d6079cdbab278f0d1b1f5dffd755b0ca138cd27534002</hash>
+         <hash>d3d5582ca54248073a7b472753b1449e0c6d86e0b04bdfe17dcc24e3b256da31</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\clock.h</file>
@@ -31403,12 +31403,12 @@
          <hash>13d4874d789b563dd4499efacd71882cbc38f8459da91ac17f13fa76079be93b</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\boot\interrupts.S</file>
-         <hash>8e1d1b3a3f4607aff05c7b18b7de0c8584dfe69e739840e854cd42ff336bfe79</hash>
-      </entry>
-      <entry>
          <file>mcc_generated_files\mcc.c</file>
          <hash>5063e41499c0f63905ad7982135b6028c9d95b5248884e01961ca9382753d7db</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\boot\interrupts.S</file>
+         <hash>0f82052f71c3c5761ab996c603c345505ea29f8e3b6ef8ef5f199d99f7cb7524</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\reset.h</file>
@@ -31416,35 +31416,35 @@
       </entry>
       <entry>
          <file>mcc_generated_files\mcc.h</file>
-         <hash>8ec874cf2f4e17ce12d01ab87c8aa281bdac432abb10294015753d7dda90cead</hash>
+         <hash>71a51c37318c016ca4e9079f7850edf7deb386b8501d03e1d7df53877d297e80</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\reset.c</file>
          <hash>7dcd545e4f0bbb78e0dd44ceebca36bd75873807a5302302bec77bea5fc16e05</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\boot\contract.json</file>
-         <hash>a97e5b9d011509fa9d62510937f3c1f0a16bfe16de4fffaa63eff9de68ee7ec8</hash>
-      </entry>
-      <entry>
          <file>mcc_generated_files\uart1.h</file>
          <hash>0879391cb29176ee4cb05aeaacc4cbee4ee0dae9e6f36c81ebcb0489edd7ebd7</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\uart1.c</file>
-         <hash>5049b1451c8a569ddc12f60754b853f5e354573cd4ea2a68a611c7fa42412329</hash>
+         <file>mcc_generated_files\boot\contract.json</file>
+         <hash>a97e5b9d011509fa9d62510937f3c1f0a16bfe16de4fffaa63eff9de68ee7ec8</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\tmr1.h</file>
          <hash>e312a8664250c0a757029213f30bc40db70b55c5e8d743396f5cd0247da2428b</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\boot\boot_private.h</file>
-         <hash>12b9d4fcb8b92edcac5763aaad22f535cde5f69cacc7b15bb971040be745b079</hash>
+         <file>mcc_generated_files\uart1.c</file>
+         <hash>5049b1451c8a569ddc12f60754b853f5e354573cd4ea2a68a611c7fa42412329</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\clock.c</file>
          <hash>aed37dfcedda60f3e66684484125494a95884456c2a7026cfa327f3e3d717990</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\boot\boot_private.h</file>
+         <hash>a9cb3ba74b09479b9d5f18a3f628b1e5033fe14b757cd64f93e8a6a91d1222e5</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\can_types.h</file>
@@ -31471,16 +31471,16 @@
          <hash>e7eff9f5f2aff775e35443ed553aa3d44ba5ef754c4d755894ef82ca3c71ac7f</hash>
       </entry>
       <entry>
+         <file>mcc_generated_files\can1.c</file>
+         <hash>cba06c5befc303a9cf6964fc529e45cb091974d56debe9b8e2f27bf9eac62e61</hash>
+      </entry>
+      <entry>
          <file>mcc_generated_files\boot\com_adaptor.h</file>
-         <hash>bb9f7dde49a876fb039121d368e9e2fb20ff8ed2ef30e2627563d276945ee196</hash>
+         <hash>3dafa0297df0ad47c821c8d6f43316f485d970e15e76eb68c22f89b9354a6899</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\boot\boot_config.h</file>
-         <hash>41ca073a05b9b13109202b9d9d9e387e552a09d41c1d1628dfd80b6908630fc7</hash>
-      </entry>
-      <entry>
-         <file>mcc_generated_files\can1.c</file>
-         <hash>cba06c5befc303a9cf6964fc529e45cb091974d56debe9b8e2f27bf9eac62e61</hash>
+         <hash>0f12877a6bf225005d7d395243adc72da5dea65c1f640a337990a1eab7bf26eb</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\traps.c</file>
@@ -31492,11 +31492,11 @@
       </entry>
       <entry>
          <file>mcc_generated_files\boot\boot_verify_checksum16.c</file>
-         <hash>c16a7fa12572dda3e493985bf744cebe3827e849c2a4a13ab287eda1a35f6f2f</hash>
+         <hash>da19d5f8cf2d750bdddb3ed0c65c6432872d24219753d6b1c9ef5fe618e0c6aa</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\boot\memory_partition.S</file>
-         <hash>8cad76ae6a36a431ace0e5a981c43e86fe3b89cc8883f7f87c99595bf44aa092</hash>
+         <hash>863a008f7f4ac4c0be039f27eef35c059866fbe436b6f07856fc3e7b9ef83509</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\interrupt_manager.c</file>
@@ -31512,7 +31512,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\boot\boot_verify_checksum16.h</file>
-         <hash>37d56ed96f8d919a6fcc88b871bcd5625243c5c1dd189c48844dc1696d9afa4f</hash>
+         <hash>01877b5e54790dd3c4288a5964f616b6c3a7d56a881566ef773edc67c21ddae3</hash>
       </entry>
    </generatedFileHashHistoryMap>
    <mc3libFileHashHistoryMap class="java.util.HashMap"/>

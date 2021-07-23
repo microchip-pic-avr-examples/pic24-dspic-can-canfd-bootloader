@@ -1,0 +1,181 @@
+<html>
+
+<head>
+  <style>
+    h2 {
+      text-decoration: bold;
+    }
+
+    h3 {
+      text-decoration: underline;
+    }
+
+    ol,ul {
+      line-height: 200%;
+    }
+  </style>
+</head>
+
+<body lang=EN-US link=blue vlink=purple>
+  <h1>Bootloader Example Using the CAN Physical Layer and TA100 ECDSA Verify</h1>
+
+  <h2>Introduction</h2>
+  This example shows how to use the pre-configured CAN demo on the dsPIC33CK256MP508 processor module for the Explorer
+  16/32 board with TA100 ECDSA signature verification to bootload an application via CAN.
+  This demo uses the ISO 15765-2 CAN Transport Protocol layer to transport custom bootloader commands over the CAN bus
+  as seen in the diagram below:<br>
+  <img src="readme_files/stack.png"><br>
+  <h2>Tools</h2>
+
+  <h3>Software</h3>
+  <ol>
+    <li><b>THIS PROJECT REQUIRES A NON PUBLIC COPY OF THE CRYPTOGRAPHIC AUTHENTICATION LIBRARY(CAL) FOR TA100 SUPPORT! CONTACT MICROCHIP TO OBTAIN A COPY. YOU MUST REQUEST VERSION CryptoAuthLib 3.2.5 ONLY.  Versions 3.3.x are not compatible with this demo.</b></li>
+    <li>The unzipped example project files, boot.X and app.X</li>
+    <li><a href="https://www.microchip.com/mplabx">Microchip MPLAB® X version 5.40 or later</a></li>
+    <li><a href="https://www.microchip.com/en-us/development-tools-tools-and-software/mplab-xc-compilers">Microchip MPLAB® XC16 C compiler version 1.60 or later</a></li>
+    <li><a href="https://www.microchip.com/16-bit-Bootloader">Unified Bootloader Host Application v1.17.0 or later</a></li>
+    <li>Microchip MPLAB® Code Configurator version v4.0.1 or later (optional – for code configuration)</li>
+    <li>16-bit Bootloader MCC module version 1.18.3 or later (optional – for code configuration)</li>
+    <li>The drivers for the selected Peak CAN-FD protocol analyzer/protocol generator (available at <a href="https://www.peak-system.com/Home.59.0.html?&L=1">https://www.peak-system.com/Home.59.0.html?&L=1</a>)</li>
+  </ol>
+
+  <h3>Hardware</h3>
+  <ol>
+    <li><a href="https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM240001-2">Explorer 16/32 Demo board</a> </li>
+    <li><a href="https://www.microchip.com/developmenttools/ProductDetails/PartNo/ma330042">dsPIC33CK256MP508 Processor module</a></li>
+    <li>A programmer/debugger of choice</li>
+    <li>A Peak CAN protocol analyzer/protocol generator. A PCAN-USB FD was used for development of this demo
+      (https://www.peak-system.com/PCAN-USB-FD.365.0.html?&L=1).</li>
+    <li>A CAN cable</li>
+    <li>A CAN-FD bus terminator (or modify the Peak analyzer per their user's guide for proper CAN-FD termination).</li>
+    <li>An MCP2542 click board (https://www.mikroe.com/mcp2542-click) or another appropriate CAN-FD transceiver click
+      board.
+      It is important that this is just a transceiver and not a CAN-to-SPI/UART converter chip.</li>
+    <li>A micro USB cable, a USB-Type C cable, or a 9v power adapter for the Explorer 16/32 (for powering the board).</li>
+	<li><a href="https://www.microchip.com/wwwproducts/en/ta100">TA100 Trust Anchor external HSM 14-pin SOIC</a></li>
+	<li><a href="https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/AC164166">TA100 14-Pin SOIC CryptoAutomotive™ Socket Board</a></li>
+    </li>
+  </ol>
+
+  <h2>Running the Demo</h2>
+
+  <h3>Hardware Configuration</h3>
+  <ol>
+    <li>With the Explorer 16/32 detached from any power source, programmer, or USB connection:</li>
+    <ol type="a">
+      <li>Connect the dsPIC33CK256MP508 processor module into the socket on the Explorer 16/32 such that the notched
+        edge is
+        in the top left corner matching the silk screen on the Explorer 16/32</li>
+	  <li>Connect the TA100 14-Pin SOIC CryptoAutomotive™ Socket board into the mikroBUS™ A slot.</li>
+      <li>Connect the MCP2542 daughter board into the mikroBUS™ B slot.</li>
+    </ol>
+    <li>Connect the programmer to the Explorer 16/32</li>
+    <li>Connect the Peak analyzer/generator to your computer.</li>
+    <li>Connect the Peak analyzer/generator to the MCP2543 daughter board with the CAN cable.</li>
+    <li>Power the board using either USB cable or the 9 volt adapter plug.</li>
+  </ol>
+  <img src="readme_files/hardware.jpg"><br><br>
+
+  <h3>Programming the Bootloader</h3>
+  <ol>
+    <li>Open the boot.x project in MPLAB® X</li>
+	<li>Copy and paste the TA100 support Cryptographic Authentication Llibrary(CAL) into the mcc_generated_files folder replacing all placeholder files within.</li>
+	<img src="readme_files/cal_replace.png"><br><br>
+    <li>Press the “Make and Program” button on the top bar.</li>
+    <img src="readme_files/program.png"><br><br>
+    <li>Select the appropriate programmer if prompted.</li>
+    <li>The project should compile and program successfully.</li>
+    <li>Verify the D3 LED is solid on the Explorer 16/32. This indicates the bootloader is running.</li>
+  </ol>
+
+  <h3>Building the Application</h3>
+  <ol>
+    <li>Open the app.X project in MPLAB® X
+    <li>Press the “Clean and Build Project” button on the top bar.
+      <b>NOTE</b>: Make sure not to hit the program button. This will program the application code over the bootloader
+      that was just programmed.</li>
+      <img src="readme_files/compile.png"><br><br>
+
+    <li>The project should compile cleanly. app.X/dist/default/production/app.X.production.hex should be generated.
+    <li>Verify that the D3 LED is still solid.
+      <ol type="a">
+        <li>If the D3 LED is blinking instead of D3 solid, then the application code was programmed instead of only
+          compiled.
+          Go back to the “Programming the Bootloader” stage and re-program the bootloader.
+        </li>
+      </ol>
+  </ol>
+
+  <h3>Loading the Application</h3>
+  <ol>
+    <li>Open the Universal Bootloader Host Application tool (UBHA)</li>
+    <img src="readme_files/ubha.jpg"><br><br>
+    <li>Select the “PIC24/dsPIC” option from the “Device Architecture” selection drop down</li>
+    <img src="readme_files/pic24f.png"><br><br>
+    <li>Select “CAN” from the protocol drop down selection box:</li>
+    <img src="readme_files/can.png"><br><br>
+    <li>Select the “Settings->CAN” option from the top menu</li>
+    <img src="readme_files/settings.png"><br><br>
+    <li>Select the Peak protocol analyzer being used and the appropriate CAN configuration settings for this demo (listed below).  When complete, press “Apply”:</li>
+    <ol type="a">
+      <li>Nominal bit rate: 500 kbits/sec</li>
+      <li>CAN-FD: enabled</li>
+      <li>CAN-FD Data Length: 64 bytes</li>
+      <li>Flexible Data Rate: Enabled</li>
+      <li>Flexible Data Rate: 2Mbit/sec</li>
+      <li>Message ID Format: Standard</li>
+      <li>Host to device ID: 0xA1</li>
+      <li>Device to host ID: 0xA2</li>
+    </ol>
+    <img src="readme_files/settings_can.jpg"><br><br>
+    <li>Press the “Read Device Settings” button.</li>
+    <ol type="a">
+      <li>The Application start address and Application end address fields should have updated. If it did not or if you
+        get a
+        communication error, please go back to the “Programming the Bootloader” stage to make sure the bootloader was
+        programmed correctly.
+      </li>
+    </ol>
+    <img src="readme_files/read_device.png"><br><br>
+    <li>Load the application hex file by selecting “File->Open/Load File (*.hex)”</li>
+    <ol type="a">
+      <li>Select the file generated in the previous section: app.X/dist/default/production/app.X.production.hex
+      </li>
+    </ol>
+    <img src="readme_files/open.png"><br><br>
+	<li>Check the "Enable Self Verification After Program" checkbox</li>
+	<img src="readme_files/enable_self_verify.png"><br><br>
+    <li>Press “Program Device”. The application should program erase, program and perform a self verify using the TA100 for an ECDSA verify then read back verify correctly.</li>
+    <ol type="a">
+      <li>After a few seconds, D3 should be blinking.</li>
+	  <img src="readme_files/self_verify_ta100.png"><br><br>
+    </ol>
+  </ol>
+
+<h2>Known Limitations</h2>
+<ul>
+  <li>Only CAN-FD is supported.  For CAN Classic support, use the CAN demo as a starting point instead.</li>
+</ul>
+
+  <h2>Terminology</h2>
+  <b>ISO 15765-2 / CAN-TP / ISO-TP</b>
+  <p>
+    ISO 15765-2 is a transport protocol layer designed for usage with the CAN bus. The original CAN bus specification
+    allows for up to 8 bytes of data to be in a single frame. Larger messages need to be fragmented into smaller frames
+    for transmission on the CAN bus. ISO 15765-2 defines a protocol for fragmenting larger messages and sending them
+    over the CAN bus. It also incorporates flexibility in handling the data transmission through the use of flow control
+    packets to control the frequency of when packets arrive as well allowing to pause the transmission of a message
+    until the receiver is ready to receive the message.</p>
+  <b>MCC</b>
+  <p>Microchip’s MPLAB® Code Configurator tool. This tool helps configure and generate source code for peripherals and
+    libraries.</p>
+  <b>UBHA - Unified Bootloader Host Application</b>
+  <p>The PC application used to send the firmware update and verification commands
+    from the PC to the board to complete the firmware update.</p>
+  <h2>Trademarks</h2>
+  MPLAB® is a registered trademark of Microchip Technology Inc. All other trademarks are the property of their
+  respective owner.
+
+</body>
+
+</html>

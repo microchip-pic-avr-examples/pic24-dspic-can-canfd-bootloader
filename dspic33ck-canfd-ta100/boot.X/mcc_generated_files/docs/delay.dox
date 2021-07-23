@@ -1,0 +1,19 @@
+/**
+\defgroup doc_driver_delay Delay Drivers
+
+
+
+\section doc_driver_delay_driver Delay drivers for PIC and AVR
+
+The MPLAB XC8 and XC16 compilers have built-in delay functions or macros for when users need to tell the MCU to wait for a certain amount of time.
+For these delay functions, time is measured in microseconds or milliseconds, and for PIC32 devices, in timer ticks as well. Format for invoking the macros
+will vary from device to device but this delay driver can help abstract these format differences. 
+
+\section doc_driver_delay_driver How to use the delay drivers
+
+To use the delay drivers, just include the delay.h file wherever you intend to use the delay function and call the DELAY_milliseconds(time) or DELAY_microseconds(time) function where
+<i>time</i> is the number of milliseconds or microseconds to delay. 
+
+*/
+
+
