@@ -35,7 +35,6 @@
          }
       },
       "peripherals":[
-         "CAN",
       ],
       "keywords":[
          "CAN",
