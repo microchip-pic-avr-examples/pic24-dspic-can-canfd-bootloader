@@ -39,9 +39,7 @@
       "keywords":[
          "CAN",
          "Bootloader",
-         "CAN-FD",
-         "TA100",
-         "Secure Boot"
+         "CAN-FD"
       ]
    }
 }
