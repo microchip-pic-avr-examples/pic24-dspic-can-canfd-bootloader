@@ -27,12 +27,6 @@
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atcacert/atcacert_host_sw.h</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atcacert/atcacert_pem.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="calib" displayName="calib" projectFiles="true">
-            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/calib/calib_aes_gcm.h</itemPath>
-            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/calib/calib_basic.h</itemPath>
-            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/calib/calib_command.h</itemPath>
-            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/calib/calib_execution.h</itemPath>
-          </logicalFolder>
           <logicalFolder name="crypto" displayName="crypto" projectFiles="true">
             <logicalFolder name="hashes" displayName="hashes" projectFiles="true">
               <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/hashes/sha1_routines.h</itemPath>
@@ -47,9 +41,6 @@
           </logicalFolder>
           <logicalFolder name="hal" displayName="hal" projectFiles="true">
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/hal/atca_hal.h</itemPath>
-            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/hal/atca_i2c_hal.h</itemPath>
-            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/hal/atca_start_config.h</itemPath>
-            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/hal/atca_start_iface.h</itemPath>
           </logicalFolder>
           <logicalFolder name="host" displayName="host" projectFiles="true">
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/host/atca_host.h</itemPath>
@@ -62,13 +53,13 @@
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_crc.h</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_defines.h</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_execution.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_fce.h</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_packet.h</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_status.h</itemPath>
           </logicalFolder>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_basic.h</itemPath>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_bool.h</itemPath>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_cfgs.h</itemPath>
-          <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_command.h</itemPath>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_compiler.h</itemPath>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_debug.h</itemPath>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_device.h</itemPath>
@@ -150,8 +141,11 @@
               <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/hashes/sha2_routines.c</itemPath>
             </logicalFolder>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/atca_crypto_hw_aes_cbc.c</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/atca_crypto_hw_aes_cbcmac.c</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/atca_crypto_hw_aes_ccm.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/atca_crypto_hw_aes_cmac.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/atca_crypto_hw_aes_ctr.c</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/atca_crypto_pbkdf2.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/atca_crypto_sw_ecdsa.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/atca_crypto_sw_rand.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/atca_crypto_sw_sha1.c</itemPath>
@@ -179,6 +173,7 @@
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_execution.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_export.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_fcconfig.c</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_fce.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_genkey.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_handle.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_import.c</itemPath>
@@ -192,6 +187,7 @@
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_random.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_read.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_rsaenc.c</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_secureboot.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_selftest.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_sequence.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_sha.c</itemPath>
@@ -201,11 +197,11 @@
           </logicalFolder>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_basic.c</itemPath>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_cfgs.c</itemPath>
-          <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_command.c</itemPath>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_debug.c</itemPath>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_device.c</itemPath>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_helpers.c</itemPath>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_iface.c</itemPath>
+          <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_utils_sizes.c</itemPath>
         </logicalFolder>
         <logicalFolder name="docs" displayName="docs" projectFiles="true">
           <itemPath>mcc_generated_files/docs/delay.dox</itemPath>
@@ -256,9 +252,9 @@
         <targetDevice>dsPIC33CK256MP508</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>ICD3PlatformTool</platformTool>
+        <platformTool>noID</platformTool>
         <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>1.60</languageToolchainVersion>
+        <languageToolchainVersion>1.70</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
