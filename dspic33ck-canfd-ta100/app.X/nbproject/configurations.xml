@@ -88,7 +88,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="dsPIC33CK-MP_DFP" vendor="Microchip" version="1.5.135"/>
+        <pack name="dsPIC33CK-MP_DFP" vendor="Microchip" version="1.6.176"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
