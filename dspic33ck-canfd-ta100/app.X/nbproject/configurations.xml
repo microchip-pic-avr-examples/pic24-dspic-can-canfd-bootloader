@@ -112,7 +112,7 @@
         <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>true</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep>cd mcc_generated_files/boot &amp;&amp; .$(_/_)postBuild$(ShExtension) $(MP_CC_DIR)</makeCustomizationPostStep>
+        <makeCustomizationPostStep>cd mcc_generated_files/boot &amp;&amp; chmod +x postBuild$(ShExtension) &amp;&amp; .$(_/_)postBuild$(ShExtension) $(MP_CC_DIR)</makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
