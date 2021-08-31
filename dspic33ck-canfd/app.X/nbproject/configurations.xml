@@ -40,7 +40,6 @@
           <itemPath>mcc_generated_files/boot/postBuild.sh</itemPath>
           <itemPath>mcc_generated_files/boot/combineAppAndBootloaderHex.sh</itemPath>
           <itemPath>mcc_generated_files/boot/hardware_interrupt_table.S</itemPath>
-          <itemPath>mcc_generated_files/boot/remapped_reset.S</itemPath>
           <itemPath>mcc_generated_files/boot/application_header_checksum16.S</itemPath>
         </logicalFolder>
         <logicalFolder name="docs" displayName="docs" projectFiles="true">
@@ -110,7 +109,7 @@
         <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>true</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep>cd mcc_generated_files/boot &amp;&amp; postBuild$(ShExtension) $(MP_CC_DIR)</makeCustomizationPostStep>
+        <makeCustomizationPostStep>cd mcc_generated_files/boot &amp;&amp; chmod +x postBuild$(ShExtension) &amp;&amp; .$(_/_)postBuild$(ShExtension) $(MP_CC_DIR) ${ProjectDir} ${ImageDir} ${ImageName} ${IsDebug}</makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
