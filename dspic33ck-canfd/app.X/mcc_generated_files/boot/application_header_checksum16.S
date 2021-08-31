@@ -13,14 +13,14 @@
   @Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  16-bit Bootloader - 1.18.4
+        Product Revision  :  16-bit Bootloader - 1.19.0
         Device            :  dsPIC33CK256MP508
     The generated drivers are tested against the following:
         Compiler          :  XC16 v1.36B
         MPLAB             :  MPLAB X v5.15
 */
 /*
-Copyright (c) [2012-2019] Microchip Technology Inc.  
+Copyright (c) [2012-2021] Microchip Technology Inc.  
 
     All rights reserved.
 
@@ -66,8 +66,8 @@ Copyright (c) [2012-2019] Microchip Technology Inc.
 * 2. Select the 'Building' left navigation node.
 * 3. Check the box next to 'Execute this line after the build'.
 * 4. In the text field below, 
-*    add "cd mcc_generated_files/boot && postBuild.bat $(MP_CC_DIR)" (without quotes) if you are on a Windows machine, 
-*    or "cd mcc_generated_files/boot && ./postBuild.sh $(MP_CC_DIR)" (without quotes) if you are on a Linux/Unix/Mac machine.  
+*    add "cd mcc_generated_files/boot && postBuild.bat $(MP_CC_DIR) ${ProjectDir} ${ImageDir} ${ImageName} ${IsDebug}" (without quotes) if you are on a Windows machine, 
+*    or "cd mcc_generated_files/boot && ./postBuild.sh $(MP_CC_DIR) ${ProjectDir} ${ImageDir} ${ImageName} ${IsDebug}" (without quotes) if you are on a Linux/Unix/Mac machine.  
 * 5. Delete or comment out the #error message above
 */
 
@@ -83,4 +83,24 @@ Copyright (c) [2012-2019] Microchip Technology Inc.
 	
     /* Address where to end the checksum */
     .long(0x2B7FE)
+    
+    /* Firmware Image Reset Remap */
+    goto __resetPRI 
 
+    /* Start of Extended Application Header */
+    .word 0 
+    
+    /* Length of Extended Application Header */
+    .long (2)
+    
+    /* Count of Items in Application Header */
+    .word (2)
+
+    /* Version Number ID */
+    .word (2) 
+
+    /* Version Number Length */
+    .long (4) 
+    
+    /* Version Number Data */
+    .long(0x0)

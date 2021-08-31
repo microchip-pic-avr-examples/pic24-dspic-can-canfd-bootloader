@@ -1,3 +1,12 @@
+# PIC24/dsPIC CAN / CAN-FD Bootloader Firmware v1.2.0
+### Release Highlights
+
+- Update TA100 Trust Anchor external HSM to Crypto Authentication Library to 3.3.2
+
+### Features Added\Updated
+
+- Support for TA100 ECDSA verify on Crypto Authentication Library 3.3.2 required rewritten HAL
+
 # PIC24/dsPIC CAN / CAN-FD Bootloader Firmware v1.1.0
 ### Release Highlights
 

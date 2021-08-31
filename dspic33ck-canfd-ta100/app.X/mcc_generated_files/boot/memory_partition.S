@@ -13,14 +13,14 @@
   @Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  16-bit Bootloader - 1.18.4
+        Product Revision  :  16-bit Bootloader - 1.19.0
         Device            :  dsPIC33CK256MP508
     The generated drivers are tested against the following:
         Compiler          :  XC16 v1.36B
         MPLAB             :  MPLAB X v5.15
 */
 /*
-Copyright (c) [2012-2019] Microchip Technology Inc.  
+Copyright (c) [2012-2021] Microchip Technology Inc.  
 
     All rights reserved.
 
@@ -52,27 +52,36 @@ Copyright (c) [2012-2019] Microchip Technology Inc.
     third party licenses prohibit any of the restrictions described here, 
     such restrictions will not apply to such third party software.
 */
-/* This code will block out the space reserved by the boot loader so that the 
- * application code can't link into that area.
- *
- * The value in the address() field defines the start address of the
- * boot code.
- *
- * The number on the .space defines the size of this block in PC units (2 per
- * instruction).
- */
+
 #include "boot_config.h"
     .equ    ERASE_PAGE_MASK,(~((2048) - 1)) 
     .equ    LAST_PAGE_START_ADDRESS, (0x2BEFE & ERASE_PAGE_MASK)
-    
-    
+    .equ    RESERVED_MEMORY_START, (0x2B7FE+2)
     .equ    PROGRAM_MEMORY_ORIGIN, (0x000200)
+    .equ    LAST_ADDRESS_OF_MEMORY, (0x2BEFE)
    
+    /* The exectuable application image lives between:
+     *   Start Address = 0x8000
+     *   End Address = 0x2B7FE
+     * 
+     * All other memory on the device must be reserved so that executable
+     * application code can't link to those addresses.  This includes the space
+     * required by the bootloader.
+     *
+     * The value in the address() field defines the start address.
+     * The number on the .space defines the size of this block in PC units (2 per
+     * instruction).
+     */
+
+    /* Reserve the memory used by the bootloader */
     .section *, code, address(PROGRAM_MEMORY_ORIGIN), noload, keep
 boot_loader_memory:
     .space (BOOT_CONFIG_PROGRAMMABLE_ADDRESS_LOW  - PROGRAM_MEMORY_ORIGIN), 0x00
 
-    .section *, code, address(LAST_PAGE_START_ADDRESS), noload, keep
+    /* Reserve all of the memory after the last instruction of the executable
+     * image, through the end of device memory.
+     */
+    .section *, code, address(RESERVED_MEMORY_START), noload, keep
 config_page_memory:
-    .space (0x2BEFE-LAST_PAGE_START_ADDRESS), 0x00
+    .space (LAST_ADDRESS_OF_MEMORY-RESERVED_MEMORY_START), 0x00
     

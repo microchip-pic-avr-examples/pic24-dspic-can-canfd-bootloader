@@ -13,14 +13,14 @@
   @Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  16-bit Bootloader - 1.18.4
+        Product Revision  :  16-bit Bootloader - 1.19.0
         Device            :  dsPIC33CK256MP508
     The generated drivers are tested against the following:
         Compiler          :  XC16 v1.36B
         MPLAB             :  MPLAB X v5.15
 */
 /*
-Copyright (c) [2012-2019] Microchip Technology Inc.  
+Copyright (c) [2012-2021] Microchip Technology Inc.  
 
     All rights reserved.
 
@@ -57,6 +57,9 @@ Copyright (c) [2012-2019] Microchip Technology Inc.
 
 #define BOOT_CONFIG_PROGRAMMABLE_ADDRESS_LOW 0x8000
 #define BOOT_CONFIG_PROGRAMMABLE_ADDRESS_HIGH 0x2B7FE
+
+#define BOOT_CONFIG_DOWNLOAD_LOW 0x8000
+#define BOOT_CONFIG_DOWNLOAD_HIGH 0x2B7FE
 
 #define BOOT_CONFIG_VERIFICATION_APPLICATION_HEADER_SIZE 72
 

@@ -36,6 +36,7 @@
 #include "cryptoauthlib.h"
 #include "hal/atca_hal.h"
 #include "atca_device.h"
+#include "talib/talib_fce.h"
 #include "talib/talib_defines.h"
 #include "drivers/spi_master.h"
 
@@ -63,46 +64,22 @@ static void TA100_ChipSelect(bool selected)
  *
    @{ */
 
-
-
 /* Notes:
     - this HAL implementation assumes you've included the Harmony SPI libraries in your project, otherwise,
     the HAL layer will not compile because the Harmony SPI drivers are a dependency *
  */
-
-/** \brief discover spi buses available for this hardware
- * this maintains a list of logical to physical bus mappings freeing the application
- * of the a-priori knowledge
- * \param[in] spi_buses - an array of logical bus numbers
- * \param[in] max_buses - maximum number of buses the app wants to attempt to discover
- * \return ATCA_SUCCESS
- */
-
-ATCA_STATUS hal_spi_discover_buses(int spi_buses[], int max_buses)
-{
-    spi_buses[0] = 0;
-    return ATCA_SUCCESS;
-}
-
-/** \brief discover any TA100 devices on a given logical bus number
- * \param[in]  bus_num  logical bus number on which to look for TA100 devices
- * \param[out] cfg     pointer to head of an array of interface config structures which get filled in by this method
- * \param[out] found   number of devices found on this bus
- * \return ATCA_SUCCESS
- */
-
-ATCA_STATUS hal_spi_discover_devices(int bus_num, ATCAIfaceCfg cfg[], int *found)
-{
-    return ATCA_UNIMPLEMENTED;
-}
 
 /** \brief initialize an SPI interface using given config
  * \param[in] hal - opaque ptr to HAL data
  * \param[in] cfg - interface configuration
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS hal_spi_init(void *hal, ATCAIfaceCfg *cfg)
+ATCA_STATUS hal_spi_init(ATCAIface iface, ATCAIfaceCfg *cfg)
 {
+    if(false == spiMaster->spiOpen())
+    {
+        return ATCA_COMM_FAIL;
+    }
     return ATCA_SUCCESS;
 }
 
@@ -124,32 +101,17 @@ ATCA_STATUS hal_spi_post_init(ATCAIface iface)
  */
 
 ATCA_STATUS hal_spi_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength)
-{
-    ATCA_STATUS status = ATCA_SUCCESS;
+{  
+    ATCAIfaceCfg* cfg = atgetifacecfg(iface);
 
-    if(false == spiMaster->spiOpen())
+    if (!cfg)
     {
-        return ATCA_COMM_FAIL;
+        return ATCA_TRACE(ATCA_BAD_PARAM, "");
     }
-    TA100_ChipSelect(true);
 
-    do
-    {
-        if (0xFF != word_address)
-        {
-            txdata[0] = word_address; // insert the Word Address Value, Command token
-            txlength++;               // account for word address value byte.
-        }
-
-
-        spiMaster->writeBlock(txdata, txlength);
-    }
-    while (0);
-
-    TA100_ChipSelect(false);
-    spiMaster->spiClose();
-    
-    return status;
+    spiMaster->writeBlock(txdata, txlength);
+        
+    return ATCA_SUCCESS;
 }
 
 /** \brief HAL implementation of SPI receive function for HARMONY SPI
@@ -162,107 +124,56 @@ ATCA_STATUS hal_spi_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata,
  */
 ATCA_STATUS hal_spi_receive(ATCAIface iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)
 {
-    ATCA_STATUS status = ATCA_SUCCESS;
+    ATCAIfaceCfg* cfg = atgetifacecfg(iface);
 
-    uint16_t rxdata_max_size;
-    uint16_t read_length = 2;
-
-    rxdata_max_size = *rxlength;
-    *rxlength = 0;
-
-    if(false == spiMaster->spiOpen())
+    if ((NULL == cfg) || (NULL == rxlength) || (NULL == rxdata))
     {
-        return ATCA_COMM_FAIL;
+        return ATCA_TRACE(ATCA_INVALID_POINTER, "NULL pointer encountered");
     }
-    TA100_ChipSelect(true);
 
-    do
+    /* read status register/length bytes to know number of bytes to read */
+    spiMaster->readBlock(rxdata, *rxlength);
+
+    return ATCA_SUCCESS;
+}
+
+
+/** \brief Perform control operations for the kit protocol
+ * \param[in]     iface          Interface to interact with.
+ * \param[in]     option         Control parameter identifier
+ * \param[in]     param          Optional pointer to parameter value
+ * \param[in]     paramlen       Length of the parameter
+ * \return ATCA_SUCCESS on success, otherwise an error code.
+ */
+ATCA_STATUS hal_spi_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen)
+{
+    (void)param;
+    (void)paramlen;
+
+    if (iface && iface->mIfaceCFG)
     {
-        /*Set read length.. Check for register reads or 1 byte reads*/
-        if ((ATCA_MAIN_PROCESSOR_RD_CSR == word_address) || (ATCA_FAST_CRYPTO_RD_FSR == word_address )
-            || ( 1  == rxdata_max_size))
+        switch (option)
         {
-            read_length = 1;
+        case ATCA_HAL_CONTROL_SELECT:
+            TA100_ChipSelect(true);
+            return ATCA_SUCCESS;
+        case ATCA_HAL_CONTROL_DESELECT:
+            TA100_ChipSelect(false);
+            return ATCA_SUCCESS;
+        default:
+            return ATCA_UNIMPLEMENTED;
         }
-
-        /*Send Word address to device...*/
-        spiMaster->writeBlock(&word_address, sizeof(word_address));
-
-        /* read status register/length bytes to know number of bytes to read */
-        spiMaster->readBlock(rxdata, read_length);
-        
-        if (1 == read_length)
-        {
-            ATCA_TRACE(status, "1 byte read completed");
-            break;
-        }
-        
-        /*Calculate bytes to read based on device response*/
-        read_length = ((uint16_t)rxdata[0] * 256) + rxdata[1];
-
-        if (read_length > rxdata_max_size)
-        {
-            status = ATCA_TRACE(ATCA_SMALL_BUFFER, "rxdata is small buffer");
-            break;
-        }
-
-        if (read_length < 5)
-        {
-            status = ATCA_TRACE(ATCA_RX_FAIL, "packet size is invalid");
-            break;
-        }
-
-        /* Read given length bytes from device */
-        spiMaster->readBlock(&rxdata[2], read_length - 2);
     }
-    while (0);
-
-    TA100_ChipSelect(false);
-    spiMaster->spiClose();
-
-    *rxlength = read_length;
-    return status;
-}
-
-
-
-/** \brief wake up TA100 device using SPI bus
- * \param[in] iface  interface to logical device to wakeup
- * \return ATCA_SUCCESS on success, otherwise an error code.
- */
-
-ATCA_STATUS hal_spi_wake(ATCAIface iface)
-{
-    return ATCA_UNIMPLEMENTED;
-}
-
-/** \brief idle TA100 device using SPI bus
- * \param[in] iface  interface to logical device to idle
- * \return ATCA_SUCCESS on success, otherwise an error code.
- */
-
-ATCA_STATUS hal_spi_idle(ATCAIface iface)
-{
-    return ATCA_UNIMPLEMENTED;
-}
-
-/** \brief sleep TA100 device using SPI bus
- * \param[in] iface  interface to logical device to sleep
- * \return ATCA_SUCCESS on success, otherwise an error code.
- */
-
-ATCA_STATUS hal_spi_sleep(ATCAIface iface)
-{
-    return ATCA_UNIMPLEMENTED;
+    return ATCA_BAD_PARAM;
 }
 
 /** \brief manages reference count on given bus and releases resource if no more refences exist
  * \param[in] hal_data - opaque pointer to hal data structure - known only to the HAL implementation
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
 ATCA_STATUS hal_spi_release(void *hal_data)
 {
+    spiMaster->spiClose();
     return ATCA_SUCCESS;
 }
 

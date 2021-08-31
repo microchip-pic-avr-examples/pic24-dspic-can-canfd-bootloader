@@ -53,9 +53,9 @@
 #include "system_types.h"
 #include "reset.h"
 
-#include "reset.h"
-#include "delay.h"
 #include "watchdog.h"
+#include "delay.h"
+#include "reset.h"
 #include "interrupt_manager.h"
 #include "traps.h"
 
