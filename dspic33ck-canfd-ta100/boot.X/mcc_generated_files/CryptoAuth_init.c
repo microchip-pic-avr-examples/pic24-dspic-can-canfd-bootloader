@@ -23,9 +23,8 @@
 #include <stdbool.h>
 #include "CryptoAuth_init.h"
 
-struct atca_command  _gmyCommand;
 struct atca_iface    _gmyIface;
-struct atca_device   _gMyDevice = {&_gmyCommand, &_gmyIface};
+struct atca_device   _gMyDevice = {&_gmyIface};
 
 ATCAIfaceCfg secureCfg = {
     .iface_type             =   ATCA_SPI_IFACE,

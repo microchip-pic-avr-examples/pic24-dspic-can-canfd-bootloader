@@ -74,7 +74,7 @@
 //#define ATCA_PLATFORM_MALLOC    @ATCA_PLATFORM_MALLOC@
 //#define ATCA_PLATFORM_FREE      @ATCA_PLATFORM_FREE@
 
-#include "../delay.h"
+#include "delay.h"
 #define atca_delay_ms   DELAY_milliseconds
 #define atca_delay_us   DELAY_microseconds
 

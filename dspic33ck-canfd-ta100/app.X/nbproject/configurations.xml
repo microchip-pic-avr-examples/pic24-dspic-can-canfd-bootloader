@@ -40,7 +40,6 @@
           <itemPath>mcc_generated_files/boot/postBuild.sh</itemPath>
           <itemPath>mcc_generated_files/boot/combineAppAndBootloaderHex.sh</itemPath>
           <itemPath>mcc_generated_files/boot/hardware_interrupt_table.S</itemPath>
-          <itemPath>mcc_generated_files/boot/remapped_reset.S</itemPath>
           <itemPath>mcc_generated_files/boot/application_header_requirements.c</itemPath>
           <itemPath>mcc_generated_files/boot/signing_tool.jar</itemPath>
           <itemPath>mcc_generated_files/boot/application_header_atecc608.S</itemPath>
@@ -84,11 +83,11 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>noID</platformTool>
         <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>1.60</languageToolchainVersion>
+        <languageToolchainVersion>1.70</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="dsPIC33CK-MP_DFP" vendor="Microchip" version="1.5.135"/>
+        <pack name="dsPIC33CK-MP_DFP" vendor="Microchip" version="1.6.176"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -112,7 +111,7 @@
         <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>true</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep>cd mcc_generated_files/boot &amp;&amp; postBuild.bat $(MP_CC_DIR)</makeCustomizationPostStep>
+        <makeCustomizationPostStep>cd mcc_generated_files/boot &amp;&amp; chmod +x postBuild$(ShExtension) &amp;&amp; .$(_/_)postBuild$(ShExtension) $(MP_CC_DIR) ${ProjectDir} ${ImageDir} ${ImageName} ${IsDebug}</makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>

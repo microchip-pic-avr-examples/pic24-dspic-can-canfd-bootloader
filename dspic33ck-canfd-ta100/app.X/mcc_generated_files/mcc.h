@@ -54,10 +54,10 @@
 #include "reset.h"
 
 #include "watchdog.h"
+#include "delay.h"
+#include "reset.h"
 #include "interrupt_manager.h"
 #include "traps.h"
-#include "reset.h"
-#include "delay.h"
 
 #warning "This file will be removed in future MCC releases. Use system.h instead."
 
