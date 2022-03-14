@@ -29,10 +29,8 @@
 #include <stdio.h>
 #include "spi1_types.h"
 
-#define INLINE  inline 
-
 /* arbitration interface */
-INLINE void spi1_close(void);
+void spi1_close(void);
 
 bool spi1_open(spi1_modes spiUniqueConfiguration);
 /* SPI native data exchange function */

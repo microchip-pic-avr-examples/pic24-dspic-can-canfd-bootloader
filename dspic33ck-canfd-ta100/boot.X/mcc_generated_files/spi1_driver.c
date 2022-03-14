@@ -28,7 +28,7 @@
 
 void (*spi1_interruptHandler)(void); 
 
-inline void spi1_close(void)
+void spi1_close(void)
 {
     SPI1CON1Lbits.SPIEN = 0;
 }
