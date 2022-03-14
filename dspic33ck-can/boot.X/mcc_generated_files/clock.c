@@ -62,8 +62,8 @@ void CLOCK_Initialize(void)
     APLLFBD1 = 0x96;
     // APOST1DIV 1:4; APOST2DIV 1:1; AVCODIV FVCO/4; 
     APLLDIV1 = 0x41;
-    // CANCLKEN enabled; CANCLKSEL AFVCO/4; CANCLKDIV Divide by 15; 
-    CANCLKCON = 0x8A0E;
+    // CANCLKEN enabled; CANCLKSEL FPLLO; CANCLKDIV Divide by 15; 
+    CANCLKCON = 0x820E;
     // ROEN disabled; ROSWEN disabled; ROSLP disabled; ROSEL FOSC; ROOUT disabled; ROSIDL disabled; 
     REFOCONL = 0x00;
     // RODIV 0; 
@@ -90,7 +90,10 @@ void CLOCK_Initialize(void)
     PMD8 = 0x00;
     // CF no clock failure; NOSC PRIPLL; CLKLOCK unlocked; OSWEN Switch is Complete; 
     __builtin_write_OSCCONH((uint8_t) (0x03));
-    __builtin_write_OSCCONL((uint8_t) (0x00));
+    __builtin_write_OSCCONL((uint8_t) (0x01));
+    // Wait for Clock switch to occur
+    while (OSCCONbits.OSWEN != 0);
+    while (OSCCONbits.LOCK != 1);
 }
 
 bool CLOCK_AuxPllLockStatusGet()
