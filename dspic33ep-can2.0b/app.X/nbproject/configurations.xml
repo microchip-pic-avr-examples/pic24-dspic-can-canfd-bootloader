@@ -78,7 +78,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>noID</platformTool>
         <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>1.70</languageToolchainVersion>
+        <languageToolchainVersion>2.00</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
@@ -112,6 +112,7 @@
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
       </makeCustomizationType>
       <C30>
+        <property key="cast-align" value="false"/>
         <property key="code-model" value="default"/>
         <property key="const-model" value="default"/>
         <property key="data-model" value="default"/>
@@ -225,6 +226,7 @@
         <property key="warn-section-align" value="false"/>
       </C30-LD>
       <C30Global>
+        <property key="combine-sourcefiles" value="false"/>
         <property key="common-include-directories" value=""/>
         <property key="dual-boot-partition" value="0"/>
         <property key="fast-math" value="false"/>
