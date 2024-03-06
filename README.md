@@ -1,5 +1,10 @@
 ![image](images/microchip.jpg) 
 
+> ### **DEPRECATION NOTICE**: This repo and associated examples are deprecated.  
+> 
+> Please refer to the latest examples at:<br>
+>   https://github.com/microchip-pic-avr-examples/dspic33_dsc_bootloader_code_examples
+
 ## PIC24/dsPIC CAN/CAN-FD Bootloader Demo
 
 ## Summary
