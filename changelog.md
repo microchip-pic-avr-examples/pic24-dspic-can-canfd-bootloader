@@ -1,3 +1,8 @@
+# PIC24/dsPIC CAN / CAN-FD Bootloader Firmware v1.3.0
+### Release Highlights
+
+- Demo has been deprecated.  Use demos at https://github.com/microchip-pic-avr-examples/dspic33_dsc_bootloader_code_examples
+
 # PIC24/dsPIC CAN / CAN-FD Bootloader Firmware v1.2.0
 ### Release Highlights
 
